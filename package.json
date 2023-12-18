@@ -1,0 +1,26 @@
+{
+  "name": "23001024_39_hya_thrifting-shop_challenge-gold",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HenochYanuar/23001024_39_HYA_Thrifting-Shop_Challenge-Gold.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HenochYanuar/23001024_39_HYA_Thrifting-Shop_Challenge-Gold/issues"
+  },
+  "homepage": "https://github.com/HenochYanuar/23001024_39_HYA_Thrifting-Shop_Challenge-Gold#readme",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "knex": "^3.1.0",
+    "nodemon": "^3.0.2",
+    "pg": "^8.11.3"
+  }
+}
