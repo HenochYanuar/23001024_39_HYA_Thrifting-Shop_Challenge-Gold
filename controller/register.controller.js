@@ -3,9 +3,8 @@ const bcrypt = require('bcrypt')
 const MailRegister = require('../middleware/mailRegister')
 
 const registerUser = (req, res) => {
-  res.json({
-    message: 'Register Page'
-  })
+  res.status(200).render('login&Register/register')
+  
 }
 
 const postRegisterUser = async (req, res) => {
@@ -39,19 +38,17 @@ const postRegisterUser = async (req, res) => {
 
       user = req.body
 
-      // await mailerVerification(email)
-      console.log(user)
       const mailRegisterInstance = new MailRegister(user)
       await mailRegisterInstance.sendMail()
 
-      res.status(201).json({ message: 'User registered successfully' })
+      res.status(201).render('login&Register/login', { message: 'User registered successfully' })
 
     } else {
-      res.status(400).json({ message: 'User registration failed, Email already exists' })
+      res.status(400).render('login&Register/register', { message: 'User registration failed, Email already exists' })
     }
   } catch (error) {
     console.error('Error in postRegisterUser:', error);
-    res.status(500).json({ error: 'Internal Server Error' })
+    res.status(500).render('login&Register/register', { error: 'Internal Server Error' })
   }
 }
 
