@@ -59,21 +59,51 @@ const registerVerify = async (req, res) => {
     let user = await userModel.findByEmail(email)
 
     if (!user) {
-      res.status(400).json({ message: `Users with email ${email} are not registered` })
+      res.status(400).render('login&Register/register', { message: `Users with email ${email} are not registered` })
 
     } else {
       await userModel.verify(email, user.isRegistered = true)
 
-      res.status(200).json({ message: 'Your email has been successfully verified'})
+      res.status(200).render('login&Register/login', { message: 'Your email has been successfully verified'})
 
     }
   } catch (error) {
     console.error('Error in postRegisterUser:', error)
-    res.status(500).json({ error: 'Internal Server Error' })
+    res.status(500).render('login&Register/register', { error: 'Internal Server Error' })
   }
 
 }
 
+const login = (req, res) => {
+  res.status(200).render('login&Register/login')
+
+}
+
+const postLogin = async (req, res) => {
+
+  try {
+    const { email, password } = req.body
+
+    let user = await userModel.findByEmail(email)
+
+    if(user) {
+      if(email === user.email && password === user.password) {
+        if(user.isRegister == true) {
+          res.status(200).json({ message: 'Selamat Datang !!' })
+        } else {
+          res.status(400).json({ message: 'Your email has not been activated, please activate it first' })
+        }
+      }else {
+        res.status(400).json({ message: 'Your email or password is incorrect' })
+      }
+    }
+
+  } catch (error) {
+    console.error('Error in postRegisterUser:', error);
+    res.status(500).render('login&Register/register', { error: 'Internal Server Error' })
+  }
+}
+
 module.exports = {
-  registerUser, postRegisterUser, registerVerify
+  registerUser, postRegisterUser, registerVerify, login, postLogin
 }
