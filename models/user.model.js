@@ -7,15 +7,22 @@ const findByEmail = async (email) => {
   try {
       return await db('users').where({ email }).first();
   } catch (error) {
-      console.error(error);
       throw new Error('Error finding user by email');
   }
 }
 
-const userRegister = user => {
+const create = user => {
   return db('users').insert(user)
 }
 
+const verify = async (email, isRegister) => {
+  try {
+      return await db('users').where({ email }).update({ isRegister });
+  } catch (error) {
+      throw new Error('Error updateing user by email');
+  }
+}
+
 module.exports = { 
-    userRegister, findByEmail
+    create, findByEmail, verify
 }
