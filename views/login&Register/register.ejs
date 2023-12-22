@@ -13,13 +13,13 @@
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5DXVYlJBeepuHm20EtKmIjrcHa3lAp4tXlA&usqp=CAU"
         alt="Thrift Logo">
       <form action="/user/register" method="POST">
-        <h1>Sign Up</h1>
+        <h1><b>Sign Up</b></h1>
         <% if (message) { %>
           <div class="alert alert-danger" role="alert">
             <%= message %>
           </div>
         <% } %>
-        <span><p>Use youre email for registeration</p></span>
+        <span><p>Use your email for registeration</p></span>
         <input type="text" id="username" name="username" placeholder="Username" >
         <input type="email" id="email" name="email" placeholder="Email">
         <input type="text" id="mobile_phone" name="mobile_phone" placeholder="No. Telpon">

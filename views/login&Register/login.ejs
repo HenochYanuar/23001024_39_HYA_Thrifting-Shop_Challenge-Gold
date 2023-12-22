@@ -11,13 +11,13 @@
   <div class="login-container">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5DXVYlJBeepuHm20EtKmIjrcHa3lAp4tXlA&usqp=CAU" alt="Thrift Logo">
     <form action="/user/login" method="POST">
-      <h1>Sign In</h1>
+      <h1><b>Sign In</b></h1>
       <% if (message) { %>
         <div class="alert alert-warning" role="alert">
           <%= message %>
         </div>
       <% } %>
-      <span><p>Use youre email for registeration</p></span>
+      <span><p>Use your email for login</p></span>
       <input type="email" id="email" name="email" placeholder="Email">
       <input type="password" id="password" name="password" placeholder="Password">
       <button type="submit">Sign In</button>
