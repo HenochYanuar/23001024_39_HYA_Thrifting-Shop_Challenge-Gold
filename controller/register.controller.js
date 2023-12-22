@@ -102,9 +102,11 @@ const postLogin = async (req, res) => {
     if(!user) {
       res.status(400).render('login&Register/login', { message: 'Your email is not registered' })
     } else {
-      if(email === user.email && password === user.password) {
+      const isValid = await bcrypt.compare(password, user.password)
+      
+      if(email === user.email && isValid == true) {
         if(user.isRegister == true) {
-          res.status(200).json({ message: 'Selamat Datang !!' })
+          res.status(200).render('product/dashboardProduct', { message: 'Selamat Datang !!' })
         } else {
           res.status(400).render('login&Register/login', { message: 'Your email has not been activated, please activate it first' })
         }
