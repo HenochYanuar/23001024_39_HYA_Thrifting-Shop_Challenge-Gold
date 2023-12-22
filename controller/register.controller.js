@@ -53,7 +53,7 @@ const postRegisterUser = async (req, res) => {
         const mailRegisterInstance = new MailRegister(user)
         await mailRegisterInstance.sendMail()
 
-        res.status(201).render('login&Register/login', { message: 'User registered successfully' })
+        res.status(201).render('login&Register/login', { message: 'User registered successfully, check your email for activation !' })
 
       } else {
         res.status(400).render('login&Register/register', { message: 'User registration failed, Email already exists' })
@@ -75,8 +75,8 @@ const registerVerify = async (req, res) => {
       res.status(400).render('login&Register/register', { message: `Users with email ${email} are not registered` })
 
     } else {
-      await userModel.verify(email, user.isRegistered = true)
 
+      await userModel.verify(email, user.isRegistered = true)
       res.status(200).render('login&Register/login', { message: 'Your email has been successfully verified'})
 
     }
@@ -101,17 +101,23 @@ const postLogin = async (req, res) => {
 
     if(!user) {
       res.status(400).render('login&Register/login', { message: 'Your email is not registered' })
+
     } else {
       const isValid = await bcrypt.compare(password, user.password)
       
       if(email === user.email && isValid == true) {
         if(user.isRegister == true) {
-          res.status(200).render('product/dashboardProduct', { message: 'Selamat Datang !!' })
+
+          req.session.id = user.id
+          res.status(200).render('product/dashboardProduct')
+
         } else {
           res.status(400).render('login&Register/login', { message: 'Your email has not been activated, please activate it first' })
+
         }
       } else {
         res.status(400).render('login&Register/login', { message: 'Your email or password is incorrect' })
+
       }
     }
 
