@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const MailRegister = require('../middleware/mailRegister')
 
 const registerUser = (req, res) => {
-  res.status(200).render('login&Register/register')
+  res.status(200).render('login&Register/register', {message : ''})
   
 }
 
@@ -12,39 +12,52 @@ const postRegisterUser = async (req, res) => {
   try {
     const { username, email, mobile_phone, password } = req.body
 
-    const userId = new Date()
+    if (!username){
+      res.render('login&Register/register', {message : 'Username is required'})
 
-    const year = userId.getFullYear();
-    const month = userId.getMonth() + 1;
-    const date = userId.getDate();
-    const hours = userId.getHours();
-    const minutes = userId.getMinutes();
-    const seconds = userId.getSeconds();
-    const milliseconds = userId.getMilliseconds();
+    } else if (!email) {
+      res.render('login&Register/register', {message : 'Email is required'})
 
-    const id = `${year}${month}${date}${hours}${minutes}${seconds}${milliseconds}`
-
-    let user = await userModel.findByEmail(email)
-    const isActive = false
-    const hashPassword = await bcrypt.hash(password, 10)
-
-    if (!user) {
-
-      user = await userModel.create({
-        id, username, email, mobile_phone,
-        password: hashPassword,
-        isRegister: isActive
-      })
-
-      user = req.body
-
-      const mailRegisterInstance = new MailRegister(user)
-      await mailRegisterInstance.sendMail()
-
-      res.status(201).render('login&Register/login', { message: 'User registered successfully' })
+    } else if (!email) {
+      res.render('login&Register/register', {message : 'Password is required'})
 
     } else {
-      res.status(400).render('login&Register/register', { message: 'User registration failed, Email already exists' })
+
+      let user = await userModel.findByEmail(email)
+
+      const userId = new Date()
+
+      const year = userId.getFullYear();
+      const month = userId.getMonth() + 1;
+      const date = userId.getDate();
+      const hours = userId.getHours();
+      const minutes = userId.getMinutes();
+      const seconds = userId.getSeconds();
+      const milliseconds = userId.getMilliseconds();
+
+      const id = `${year}${month}${date}${hours}${minutes}${seconds}${milliseconds}`
+
+      const isActive = false
+      const hashPassword = await bcrypt.hash(password, 10)
+
+      if (!user) {
+
+        user = await userModel.create({
+          id, username, email, mobile_phone,
+          password: hashPassword,
+          isRegister: isActive
+        })
+
+        user = req.body
+
+        const mailRegisterInstance = new MailRegister(user)
+        await mailRegisterInstance.sendMail()
+
+        res.status(201).render('login&Register/login', { message: 'User registered successfully' })
+
+      } else {
+        res.status(400).render('login&Register/register', { message: 'User registration failed, Email already exists' })
+      }
     }
   } catch (error) {
     console.error('Error in postRegisterUser:', error);
@@ -75,7 +88,7 @@ const registerVerify = async (req, res) => {
 }
 
 const login = (req, res) => {
-  res.status(200).render('login&Register/login')
+  res.status(200).render('login&Register/login', { message: '' })
 
 }
 
@@ -86,15 +99,17 @@ const postLogin = async (req, res) => {
 
     let user = await userModel.findByEmail(email)
 
-    if(user) {
+    if(!user) {
+      res.status(400).render('login&Register/login', { message: 'Your email is not registered' })
+    } else {
       if(email === user.email && password === user.password) {
         if(user.isRegister == true) {
           res.status(200).json({ message: 'Selamat Datang !!' })
         } else {
-          res.status(400).json({ message: 'Your email has not been activated, please activate it first' })
+          res.status(400).render('login&Register/login', { message: 'Your email has not been activated, please activate it first' })
         }
-      }else {
-        res.status(400).json({ message: 'Your email or password is incorrect' })
+      } else {
+        res.status(400).render('login&Register/login', { message: 'Your email or password is incorrect' })
       }
     }
 
