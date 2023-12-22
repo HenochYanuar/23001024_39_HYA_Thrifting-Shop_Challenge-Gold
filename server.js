@@ -3,6 +3,7 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const { registerRouter } = require('./routes/register.route')
 const { loginRouter } = require('./routes/login.route')
+const { productRouter } = require('./routes/product.route')
 const port = 3000
 
 const server = express()
@@ -16,5 +17,6 @@ server.use(express.json())
 
 server.use('/user/register', registerRouter)
 server.use('/user/login', loginRouter)
+server.use('/', productRouter)
 
 server.listen(port, () => console.log(`Server is running at http://localhost:${port}`))
