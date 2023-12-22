@@ -1,22 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/register.css">
-  <title>Thrifting Shop | Register</title>
-</head>
-<body>
-  <div class="login-container">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5DXVYlJBeepuHm20EtKmIjrcHa3lAp4tXlA&usqp=CAU" alt="Thrift Logo">
-    <h1>Register</h1>
-    <form action="/user/register" method="POST">
-      <input type="text" id="username" name="username" placeholder="Username">
-      <input type="email" id="email" name="email" placeholder="Email">
-      <input type="text" id="mobile_phone" name="mobile_phone" placeholder="No. Telpon">
-      <input type="password" id="password" name="password" placeholder="Password">
-      <button type="submit">Sign Up</button>
-    </form>
-</div>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/register.css">
+    <title>Thrifting Shop | Register</title>
+  </head>
+  <body>
+    <div class="login-container">
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5DXVYlJBeepuHm20EtKmIjrcHa3lAp4tXlA&usqp=CAU"
+        alt="Thrift Logo">
+      <form action="/user/register" method="POST">
+        <h1>Sign Up</h1>
+        <% if (message) { %>
+          <div class="alert alert-danger" role="alert">
+            <%= message %>
+          </div>
+        <% } %>
+        <span><p>Use youre email for registeration</p></span>
+        <input type="text" id="username" name="username" placeholder="Username" >
+        <input type="email" id="email" name="email" placeholder="Email" required>
+        <input type="text" id="mobile_phone" name="mobile_phone" placeholder="No. Telpon">
+        <input type="password" id="password" name="password" placeholder="Password" required>
+        <button type="submit">Sign Up</button>
+      </form>
+      <span><p>Already have an account ? <a href="/user/login">Sign In</a></p></span>
+    </div>
+  </body>
 </html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/register.css">
+    <title>Thrifting Shop | Register</title>
+  </head>
+  <body>
+
+    <div class="container" id="container">
+      <div class="form-container sign-up">
+        <form action="">
+          <h1>Create Account</h1>
+          <div class="social-icons">
+            <a href="#" class="icon"><i class=""></i></a>
+            <a href="#" class="icon"><i class=""></i></a>
+            <a href="#" class="icon"><i class=""></i></a>
+            <a href="#" class="icon"><i class=""></i></a>
+          </div>
+          <span>Use youre email for registeration</span>
+          <input type="text" id="username" name="username" placeholder="Username">
+          <input type="email" id="email" name="email" placeholder="Email">
+          <input type="text" id="mobile_phone" name="mobile_phone" placeholder="No. Telpon">
+          <input type="password" id="password" name="password" placeholder="Password">
+          <button type="submit">Sign Up</button>
+        </form>
+      </div>
+      <div class="form-container sing-in">
+        <form action="">
+          <h1>Sign In</h1>
+          <div class="social-icons">
+            <a href="#" class="icon"><i class=""></i></a>
+            <a href="#" class="icon"><i class=""></i></a>
+            <a href="#" class="icon"><i class=""></i></a>
+            <a href="#" class="icon"><i class=""></i></a>
+          </div>
+          <span>Use youre email for registeration</span>
+          <input type="email" id="email" name="email" placeholder="Email">
+          <input type="password" id="password" name="password" placeholder="Password">
+          <a href="">Forgot your password ?</a>
+          <button type="submit">Sign In</button>
+        </form>
+      </div>
+      <div class="toggle-container">
+        <div class="toggle">
+          <div class="toggle-panel toggle-left">
+            <h1>Welcome Back !</h1>
+            <p>Enter your personal details to use all of site features</p>
+            <button class="hidden" id="login">Sign In</button>
+          </div>
+          <div class="toggle-panel toggle-left">
+            <h1>Hello, Friend !</h1>
+            <p>Enter your personal details to use all of site features</p>
+            <button class="hidden" id="register">Sign Un</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/register"></script>
+  </body>
+</html> -->
