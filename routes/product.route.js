@@ -4,9 +4,9 @@ const authMiddleware = require('../middleware/authMiddleware')
 
 const productRouter = express.Router()
 
-productRouter.use(authMiddleware)
-
 productRouter.get('/', productController.getAllProducts)
+
+productRouter.use(authMiddleware)
 
 module.exports = {
   productRouter
