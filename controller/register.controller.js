@@ -97,6 +97,10 @@ const postLogin = async (req, res) => {
   try {
     const { email, password } = req.body
 
+    if (!email || !password) {
+      res.status(400).render('login&Register/login', { message: 'Username and password are required' })
+    }
+
     let user = await userModel.findByEmail(email)
 
     if(!user) {
@@ -108,8 +112,8 @@ const postLogin = async (req, res) => {
       if(email === user.email && isValid == true) {
         if(user.isRegister == true) {
 
-          req.session.id = user.id
-          res.status(200).render('product/dashboardProduct')
+          req.session.email = email
+          res.status(200).redirect('/')
 
         } else {
           res.status(400).render('login&Register/login', { message: 'Your email has not been activated, please activate it first' })
@@ -122,7 +126,7 @@ const postLogin = async (req, res) => {
     }
 
   } catch (error) {
-    console.error('Error in postRegisterUser:', error);
+    console.error('Error in postRegisterUser:', error)
     res.status(500).render('login&Register/register', { error: 'Internal Server Error' })
   }
 }

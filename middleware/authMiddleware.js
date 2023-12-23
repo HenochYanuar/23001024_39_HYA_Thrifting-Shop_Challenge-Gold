@@ -1,8 +1,9 @@
-const handle = (req, res, next) => {
-  if (req.session.id === undefined || req.session.id === null) {
-      return res.redirect('/user/login')
+const authHandle = (req, res, next) => {
+  if (req.session && req.session.email) {
+    next()
+  } else {
+    res.redirect('/user/login')
   }
-  return next()
 }
 
-module.exports = handle
+module.exports = authHandle;
