@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thrifting Shop | User Profile</title>
+    <link rel="stylesheet" href="/css/userProfile.css">
+  </head>
+  <body>
+    <div class="profile-container">
+      <div class="profile-info">
+        <div class="box-info">
+          <h2>Profil Saya</h2>
+          <div class="desc-info">
+            Kelola Informasi Profil Pribadi Anda
+          </div>
+        </div>
+        <form action method="post">
+          <table class="form-table">
+            <tr>
+              <td class="lable-container">
+                <label for="username">Username</label>
+              </td>
+              <td class="input-container">
+                <div class="input">
+                  <input type="text" id="username" name="username"
+                    value="<%= context.username %>">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="lable-container">
+                <label for="name">Nama</label>
+              </td>
+              <td class="input-container">
+                <div class="input">
+                  <input type="text" id="name" name="name"
+                    value="Henoch Yanuar Ari Swasono">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="lable-container">
+                <label for="email">E-mail</label>
+              </td>
+              <td class="input-container">
+                <div class="input">
+                  <input type="email" id="email" name="email"
+                    value="<%= context.email %>">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="lable-container">
+                <label for="mobile_phone">Nomor Telepon</label>
+              </td>
+              <td class="input-container">
+                <div class="input">
+                  <input type="tel" id="mobile_phone" name="mobile_phone"
+                    value="<%= context.mobile_phone %>">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="lable-container">
+                <label for="gender">Jenis Kelamin</label>
+              </td>
+              <td class="input-container">
+                <div class="radio-input">
+                  <input type="radio" id="gender" name="gender"
+                    value="Laki-laki">
+                  <label for="gender">Pria</label>
+                  <input type="radio" id="gender" name="gender"
+                    value="Perempuan">
+                  <label for="gender">Wanita</label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="lable-container">
+                <label for="birthdate">Tanggal Lahir</label>
+              </td>
+              <td class="input-container">
+                <div class="input">
+                  <input type="date" id="birthdate" name="birthdate"
+                    value="2003-01-13">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="lable-container"><label></label></td>
+              <td class="input-container">
+                <div class="profile-actions">
+                  <button type="button">Simpan</button>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

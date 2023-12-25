@@ -1,0 +1,222 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+
+.profile-info {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info h2 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  color: #333;
+  display: block;
+  margin-block-end: 0.2em;
+  margin-inline-end: 0px;
+}
+
+.profile-info .box-info {
+  border-bottom: 0.0625rem solid #efefef;
+  padding: 1.125rem 0;
+}
+
+.profile-info .desc-info {
+  margin-top: 0.1875rem;
+  font-size: .875rem;
+  line-height: 1.0625rem;
+  color: #555;
+}
+
+.profile-info .lable-container {
+  text-align: right;
+  color: rgba(85, 85, 85, .8);
+  overflow: hidden;
+  padding-bottom: 30px;
+  white-space: nowrap;
+  min-width: 20%;
+
+}
+
+table {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-collapse: collapse;
+  border-spacing: 0;
+  padding-top: 20px;
+  display: table;
+  border-collapse: separate;
+  box-sizing: border-box;
+  text-indent: initial;
+  border-spacing: 2px;
+  border-color: gray;
+}
+
+.form-table {
+  width: 602px;
+}
+
+td, th {
+  padding: 0;
+}
+
+td {
+  display: table-cell;
+  vertical-align: inherit;
+}
+
+.form-table  .lable-container {
+  text-align: right;
+  color: rgba(85,85,85,.8);
+  overflow: hidden;
+  padding-bottom: 30px;
+  white-space: nowrap;
+  min-width: 20%;
+}
+
+.form-table .input-container {
+  box-sizing: border-box;
+  padding-left: 20px;
+  padding-bottom: 30px;
+}
+
+.form-table .input-container .input {
+  align-items: center;
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  height: 40px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,.14);
+  border-radius: 2px;
+  box-shadow: inset 0 2px 0 rgba(0,0,0,.02);
+}
+
+.form-table .input-container .radio-input {
+  align-items: center;
+  display: flex;
+  width: 100%;
+  height: 40px;
+  overflow: hidden;
+}
+
+.form-table .input-container .input input{
+  text-rendering: auto;
+  letter-spacing: normal;
+  word-spacing: normal;
+  margin: 0em;
+  border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+}
+
+.form-table .input-container .input input {
+  background: none;
+  padding: 12px;
+  outline: none;
+  border: 0;
+  flex: 1;
+  flex-shrink: 0;
+  filter: none;
+}
+
+.profile-info label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.profile-info input {
+  width: 10%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+}
+
+.profile-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-actions button {
+  padding: 10px 20px;
+  background-color: #f23567;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.profile-actions button:hover {
+  background-color: #f5497b;
+}
+
+@media only screen and (max-width: 1260px) {
+  .profile-info {
+    width: 50%; /* Tidak mengubah lebar .profile-info */
+  }
+
+  .form-table {
+    width: 100%; /* Lebar tabel 100% untuk layar kecil */
+  }
+
+  .form-table .lable-container,
+  .form-table .input-container {
+    text-align: right; /* Ubah align untuk label dan input */
+    padding-bottom: 15px; /* Sesuaikan ruang antar elemen */
+  }
+
+  .profile-info input {
+    width: 10%; /* Lebar input 100% untuk layar kecil */
+  }
+
+  .profile-actions {
+    flex-direction: column; /* Susun tombol secara vertikal untuk layar kecil */
+    align-items: center; /* Pusatkan tombol */
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .profile-info {
+    width: 80%; /* Atur ulang lebar .profile-info */
+  }
+
+  .profile-container {
+    flex-direction: column;
+  }
+
+  /* Atur ulang aturan CSS lainnya sesuai kebutuhan */
+  .form-table {
+    width: 100%;
+  }
+
+  .profile-info input {
+    width: 100%;
+  }
+}
+
+/* Tambahan untuk meningkatkan responsivitas pada layar yang sangat kecil */
+@media only screen and (max-width: 480px) {
+  .profile-info {
+    padding: 10px; /* Sesuaikan padding untuk ruang konten yang lebih kecil */
+  }
+}
