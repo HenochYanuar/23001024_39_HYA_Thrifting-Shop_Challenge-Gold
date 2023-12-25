@@ -18,7 +18,7 @@ server.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-      maxAge: 360000,
+      maxAge: 7200000,
   },
 }));
 
