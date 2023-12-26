@@ -15,7 +15,7 @@
             Kelola Informasi Profil Pribadi Anda
           </div>
         </div>
-        <form action method="post">
+        <form action="/user/account/profile" method="POST">
           <table class="form-table">
             <tr>
               <td class="lable-container">
@@ -35,7 +35,7 @@
               <td class="input-container">
                 <div class="input">
                   <input type="text" id="name" name="name"
-                    value="Henoch Yanuar Ari Swasono">
+                    value="<%= context.name %>">
                 </div>
               </td>
             </tr>
@@ -78,12 +78,23 @@
             </tr>
             <tr>
               <td class="lable-container">
-                <label for="birthdate">Tanggal Lahir</label>
+                <label for="birthday">Tanggal Lahir</label>
               </td>
               <td class="input-container">
                 <div class="input">
-                  <input type="date" id="birthdate" name="birthdate"
-                    value="2003-01-13">
+                  <input type="date" id="birthday" name="birthday"
+                    value="<%= context.birthday %>">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="lable-container">
+                <label for="foto">Foto Profil</label>
+              </td>
+              <td class="input-container">
+                <div class="input">
+                  <input type="file" id="foto" name="foto"
+                    value="<%= context.foto %>">
                 </div>
               </td>
             </tr>
@@ -91,7 +102,7 @@
               <td class="lable-container"><label></label></td>
               <td class="input-container">
                 <div class="profile-actions">
-                  <button type="button">Simpan</button>
+                  <button type="submit">Simpan</button>
                 </div>
               </td>
             </tr>

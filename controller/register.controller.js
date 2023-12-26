@@ -3,8 +3,8 @@ const bcrypt = require('bcrypt')
 const MailRegister = require('../middleware/mailRegister')
 
 const registerUser = (req, res) => {
-  res.status(200).render('login&Register/register', {message : ''})
-  
+  res.status(200).render('login&Register/register', { message: '' })
+
 }
 
 const postRegisterUser = async (req, res) => {
@@ -12,14 +12,14 @@ const postRegisterUser = async (req, res) => {
   try {
     const { username, email, mobile_phone, password } = req.body
 
-    if (!username){
-      res.render('login&Register/register', {message : 'Username is required'})
+    if (!username) {
+      res.render('login&Register/register', { message: 'Username is required' })
 
     } else if (!email) {
-      res.render('login&Register/register', {message : 'Email is required'})
+      res.render('login&Register/register', { message: 'Email is required' })
 
     } else if (!email) {
-      res.render('login&Register/register', {message : 'Password is required'})
+      res.render('login&Register/register', { message: 'Password is required' })
 
     } else {
 
@@ -27,13 +27,13 @@ const postRegisterUser = async (req, res) => {
 
       const userId = new Date()
 
-      const year = userId.getFullYear();
-      const month = userId.getMonth() + 1;
-      const date = userId.getDate();
-      const hours = userId.getHours();
-      const minutes = userId.getMinutes();
-      const seconds = userId.getSeconds();
-      const milliseconds = userId.getMilliseconds();
+      const year = userId.getFullYear()
+      const month = userId.getMonth() + 1
+      const date = userId.getDate()
+      const hours = userId.getHours()
+      const minutes = userId.getMinutes()
+      const seconds = userId.getSeconds()
+      const milliseconds = userId.getMilliseconds()
 
       const id = `${year}${month}${date}${hours}${minutes}${seconds}${milliseconds}`
 
@@ -77,7 +77,7 @@ const registerVerify = async (req, res) => {
     } else {
 
       await userModel.verify(email, user.isRegistered = true)
-      res.status(200).render('login&Register/login', { message: 'Your email has been successfully verified'})
+      res.status(200).render('login&Register/login', { message: 'Your email has been successfully verified' })
 
     }
   } catch (error) {
@@ -103,14 +103,14 @@ const postLogin = async (req, res) => {
 
     let user = await userModel.findByEmail(email)
 
-    if(!user) {
+    if (!user) {
       res.status(400).render('login&Register/login', { message: 'Your email is not registered' })
 
     } else {
       const isValid = await bcrypt.compare(password, user.password)
-      
-      if(email === user.email && isValid == true) {
-        if(user.isRegister == true) {
+
+      if (email === user.email && isValid == true) {
+        if (user.isRegister == true) {
 
           req.session.email = email
           res.status(200).redirect('/')
