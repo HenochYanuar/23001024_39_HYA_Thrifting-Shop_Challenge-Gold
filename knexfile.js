@@ -18,4 +18,4 @@ module.exports = {
   development: connection,
   staging: connection,
   production: connection,
-};
+}
