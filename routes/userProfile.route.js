@@ -10,7 +10,7 @@ profileRouter.get('/', (req, res) => {
   res.redirect('/user/account/profile')
 })
 profileRouter.get('/profile', userProfileController.getUserProfile)
-profileRouter.post('/profile', userProfileController.postUserProfile)
+profileRouter.post('/profile', userProfileController.uploadMiddleware, userProfileController.postUserProfile)
 
 module.exports = {
   profileRouter

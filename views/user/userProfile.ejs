@@ -15,7 +15,7 @@
             Kelola Informasi Profil Pribadi Anda
           </div>
         </div>
-        <form action="/user/account/profile" method="POST">
+        <form action="/user/account/profile" method="POST" enctype="multipart/form-data">
           <table class="form-table">
             <tr>
               <td class="lable-container">
@@ -23,8 +23,7 @@
               </td>
               <td class="input-container">
                 <div class="input">
-                  <input type="text" id="username" name="username"
-                    value="<%= context.username %>">
+                  <input type="text" id="username" name="username" value="<%= context.username %>">
                 </div>
               </td>
             </tr>
@@ -34,8 +33,7 @@
               </td>
               <td class="input-container">
                 <div class="input">
-                  <input type="text" id="name" name="name"
-                    value="<%= context.name %>">
+                  <input type="text" id="name" name="name" value="<%= context.name %>">
                 </div>
               </td>
             </tr>
@@ -45,8 +43,7 @@
               </td>
               <td class="input-container">
                 <div class="input">
-                  <input type="email" id="email" name="email"
-                    value="<%= context.email %>">
+                  <input type="email" id="email" name="email" readonly value="<%= context.email %>">
                 </div>
               </td>
             </tr>
@@ -56,8 +53,7 @@
               </td>
               <td class="input-container">
                 <div class="input">
-                  <input type="tel" id="mobile_phone" name="mobile_phone"
-                    value="<%= context.mobile_phone %>">
+                  <input type="tel" id="mobile_phone" name="mobile_phone" value="<%= context.mobile_phone %>">
                 </div>
               </td>
             </tr>
@@ -68,10 +64,10 @@
               <td class="input-container">
                 <div class="radio-input">
                   <input type="radio" id="gender" name="gender"
-                    value="Laki-laki">
+                    value="Laki-laki" <%= context.gender === 'Laki-laki' ? 'checked' : '' %> >
                   <label for="gender">Pria</label>
                   <input type="radio" id="gender" name="gender"
-                    value="Perempuan">
+                    value="Wanita" <%= context.gender === 'Wanita' ? 'checked' : '' %> >
                   <label for="gender">Wanita</label>
                 </div>
               </td>
@@ -82,8 +78,7 @@
               </td>
               <td class="input-container">
                 <div class="input">
-                  <input type="date" id="birthday" name="birthday"
-                    value="<%= context.birthday %>">
+                  <input type="date" id="birthday" name="birthday" value="<%= context.birthday.toISOString().slice(0,10) %>">
                 </div>
               </td>
             </tr>
@@ -93,13 +88,14 @@
               </td>
               <td class="input-container">
                 <div class="input">
-                  <input type="file" id="foto" name="foto"
-                    value="<%= context.foto %>">
+                  <input type="file" id="foto" name="foto" value="<%= context.foto %>">
                 </div>
               </td>
             </tr>
             <tr>
-              <td class="lable-container"><label></label></td>
+              <td class="lable-container"><label>
+                <img style="width: 50px;" src="/img/<%= context.foto %>" alt="">
+              </label></td>
               <td class="input-container">
                 <div class="profile-actions">
                   <button type="submit">Simpan</button>

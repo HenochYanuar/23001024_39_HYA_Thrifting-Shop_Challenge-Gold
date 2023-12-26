@@ -1,5 +1,6 @@
 const userModel = require('../models/user.model')
 const userBioModel = require('../models/userBio.model')
+const saveImgMiddleware = require('../middleware/saveImgMiddleware')
 
 const getUserProfile = async (req, res) => {
   const user = await userModel.findByEmail(req.session.email)
@@ -25,7 +26,8 @@ const getUserProfile = async (req, res) => {
 const postUserProfile = async (req, res) => {
 
   try {
-    const { username, name, email, mobile_phone, gender, birthday, foto } = req.body
+    const { username, name, email, mobile_phone, gender, birthday } = req.body
+    const foto = req.file.filename
 
     let user = await userModel.findByEmail(email)
 
@@ -34,7 +36,7 @@ const postUserProfile = async (req, res) => {
     }
 
     await userModel.update(email, username, mobile_phone)
-    
+
     let userBio = await userBioModel.findByUserId(user.id)
 
     const userId = new Date()
@@ -55,19 +57,10 @@ const postUserProfile = async (req, res) => {
         userID: user.id
       })
     } else {
-      await userBioModel.update({
-        userID: user.id
-      },
-        {
-          name, gender, birthday, foto
-        })
+      await userBioModel.update(user.id, name, gender, birthday, foto)
     }
 
-    const context = {
-      username, name, email, mobile_phone, gender, birthday, foto
-    }
-
-    res.status(201).redirect('user/userProfile', { context })
+    res.status(201).redirect('/user/account/profile')
 
   } catch (error) {
     console.error('Error in postRegisterUser:', error)
@@ -76,6 +69,8 @@ const postUserProfile = async (req, res) => {
 
 }
 
+const uploadMiddleware = saveImgMiddleware.uploadMiddleware
+
 module.exports = {
-  getUserProfile, postUserProfile
+  getUserProfile, postUserProfile, uploadMiddleware
 }

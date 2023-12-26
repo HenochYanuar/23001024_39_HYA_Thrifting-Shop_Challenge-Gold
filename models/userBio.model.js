@@ -15,9 +15,9 @@ const create = userBio => {
   return db('usersBio').insert(userBio)
 } 
 
-const update = async (userID, bioUpdate) => {
+const update = async (userID, name, gender, birthday, foto) => {
   try {
-    return await db('usersBio').where({ userID }).update({ bioUpdate })
+    return await db('usersBio').where({ userID }).update({ name, gender, birthday, foto })
   } catch (error) {
     throw new Error('Error updateing biografi user by user ID')
   }
