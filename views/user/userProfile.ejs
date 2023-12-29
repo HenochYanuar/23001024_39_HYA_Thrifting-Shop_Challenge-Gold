@@ -78,7 +78,7 @@
               </td>
               <td class="input-container">
                 <div class="input">
-                  <input type="date" id="birthday" name="birthday" value="<%= context.birthday.toISOString().slice(0,10) %>">
+                  <input type="date" id="birthday" name="birthday">
                 </div>
               </td>
             </tr>
@@ -94,7 +94,7 @@
             </tr>
             <tr>
               <td class="lable-container"><label>
-                <img style="width: 50px;" src="/img/<%= context.foto %>" alt="">
+                <img style="width: 50px;" src="/img/users/<%= context.foto %>" alt="">
               </label></td>
               <td class="input-container">
                 <div class="profile-actions">
@@ -106,5 +106,11 @@
         </form>
       </div>
     </div>
+
+    <script>
+      var birthdayDate = new Date('<%= context.birthday.toISOString() %>');
+      birthdayDate.setMinutes(birthdayDate.getMinutes() - birthdayDate.getTimezoneOffset());
+      document.getElementById('birthday').value = birthdayDate.toISOString().slice(0,10);
+    </script>
   </body>
 </html>
