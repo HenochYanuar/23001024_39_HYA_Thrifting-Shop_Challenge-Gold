@@ -69,7 +69,7 @@ const postUserProfile = async (req, res) => {
 
 }
 
-const uploadMiddleware = saveImgMiddleware.uploadMiddleware
+const uploadMiddleware = saveImgMiddleware.uploadUserMiddleware
 
 module.exports = {
   getUserProfile, postUserProfile, uploadMiddleware
