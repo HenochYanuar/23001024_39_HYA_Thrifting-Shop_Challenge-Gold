@@ -1,3 +1,4 @@
 node_modules/
 public/img/
 knexfile.js
+utils/mailerConfig.js
