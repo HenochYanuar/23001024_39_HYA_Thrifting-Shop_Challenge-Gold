@@ -63,14 +63,17 @@ const updateUserAddres = async (req, res) => {
     
     const address = await userAddressModel.getOne(id)
 
+    if (!address) {
+      res.status(400).redirect('/user/account/address')
+    }
+
     const context = {
       id : address.id,
       province : address.province,
       regency : address.regency,
       subdistrict : address.subdistrict,
       postalCode : address.postalCode,
-      addressDetail : address.addressDetail,
-      userID : address.userID
+      addressDetail : address.addressDetail
     }
 
     return res.status(200).render('user/formUpdateUserAddress',{ context })
@@ -100,6 +103,27 @@ const postUpdateUserAddress = async (req, res) => {
   }
 }
 
+const deleteUserAddress = async (req, res) => {
+  try {
+    const id = await req.params.id
+    
+    const address = await userAddressModel.getOne(id)
+
+    if (!address) {
+      res.status(400).redirect('/user/account/address')
+    }
+
+    await userAddressModel.deleteUserAddress(id)
+
+    return res.status(201).redirect('/user/account/address')
+    
+  } catch (error) {
+    console.error('Error in deleteUserAddress:', error)
+    res.status(500).render('user/userAddress', { error: 'Internal Server Error' })
+    
+  }
+}
+
 module.exports = {
-  postAddUserAddress, addUserAddress, getUserAddress, updateUserAddres, postUpdateUserAddress
+  postAddUserAddress, addUserAddress, getUserAddress, updateUserAddres, postUpdateUserAddress, deleteUserAddress
 }

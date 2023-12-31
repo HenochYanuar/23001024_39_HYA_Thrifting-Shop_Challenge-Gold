@@ -23,22 +23,22 @@ const getOne = async (id) => {
   }
 }
 
-const update = async (id, province, regency, subdistrict, postalCode, addressDetail, userID) => {
+const update = async (id, province, regency, subdistrict, postalCode, addressDetail) => {
   try {
-    return await db('usersAddress').where({ id }).update({ province, regency, subdistrict, postalCode, addressDetail, userID })
+    return await db('usersAddress').where({ id }).update({ province, regency, subdistrict, postalCode, addressDetail })
   } catch (error) {
     throw new Error('Error updateing user address by address ID')
   }
 }
 
-const findByUserId = async (userID) => {
+const deleteUserAddress = async (id) => {
   try {
-    return await db('usersAddress').find(userID).first()
+    return await db('usersAddress').where({ id }).del()
   } catch (error) {
-    throw new Error('Error finding user by userId')
+    throw new Error('Error deleting user address by address ID')
   }
 }
 
 module.exports = {
-  findByUserId, getUserAddres, create, getOne, update
+  getUserAddres, create, getOne, update, deleteUserAddress
 }
