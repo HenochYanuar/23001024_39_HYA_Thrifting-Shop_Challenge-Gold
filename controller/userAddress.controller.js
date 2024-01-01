@@ -90,7 +90,7 @@ const postUpdateUserAddress = async (req, res) => {
     const { id, province, regency, subdistrict, postalCode, addressDetail, userID } = req.body
 
     if (!id) {
-      req.res(400).json({ message : 'pekok e, alamat e sopo iki ra ono gob....' })
+      res.status(400).json({ message : 'pekok e, alamat e sopo iki ra ono gob....' })
     }
 
     await userAddressModel.update(id, province, regency, subdistrict, postalCode, addressDetail, userID)

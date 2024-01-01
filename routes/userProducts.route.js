@@ -9,6 +9,8 @@ userProductsRouter.use(authMiddleware)
 userProductsRouter.get('/userProducts', productController.getUserProducts)
 userProductsRouter.get('/userProducts/add', productController.addUserProduct)
 userProductsRouter.post('/userProducts', productController.uploadMiddleware, productController.postAddUserProduct)
+userProductsRouter.get('/userProducts/update/:id', productController.updateUserProduct)
+userProductsRouter.post('/userProducts/update', productController.uploadMiddleware, productController.postUpdateUserProduct)
 
 module.exports = {
   userProductsRouter

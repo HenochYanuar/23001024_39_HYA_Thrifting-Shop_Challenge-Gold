@@ -23,6 +23,22 @@ const create = async (item) => {
   return await db('goods').insert( item )
 }
 
+const getOne = async (id) => {
+  try {
+    return await db('goods').where({ id }).first()
+  } catch (error) {
+    throw new Error('Error geting one user product ')
+  }
+}
+
+const update = async (id, itemCategory, brand, price, description, foto) => {
+  try {
+    return await db('goods').where({ id }).update({ itemCategory, brand, price, description, foto })
+  } catch (error) {
+    throw new Error('Error updateing user product by id')
+  }
+}
+
 module.exports  = {
-  getAll, getUserProducts, create
+  getAll, getUserProducts, create, getOne, update
 }
