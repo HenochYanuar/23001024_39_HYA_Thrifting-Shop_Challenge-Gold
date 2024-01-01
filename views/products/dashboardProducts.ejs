@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Dashboard Product</h1>
+    <% if (context.products && context.products.length > 0) { %>
+    <ul>
+      <% context.products.forEach((product) => { %>
+      <li>
+        <strong>Category:</strong> <%= product.itemCategory %><br>
+        <strong>Brand:</strong> <%= product.brand %><br>
+        <strong>Price:</strong> <%= product.price %><br>
+        <strong>Description:</strong> <%= product.description %><br>
+        <img src="/img/products/<%= product.foto %>" alt><br>
+      </li>
+      <% }) %>
+    </ul>
+    <% } else { %>
+    <p>No addresses found.</p>
+    <% } %>
+  </body>
+</html>

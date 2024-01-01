@@ -74,7 +74,7 @@ const postAddUserProduct = async (req, res) => {
 
     return res.status(201).redirect('/user/account/userProducts')
   } catch (error) {
-    console.error('Error in postAddUserAddress:', error)
+    console.error('Error in postAddUserProduct:', error)
     res.status(500).render('products/userProducts/userProducts', { error: 'Internal Server Error' })
   }
 }
@@ -102,7 +102,7 @@ const updateUserProduct = async (req, res) => {
     return res.status(201).render('products/userProducts/formUpdateUserProduct', { context })
 
   } catch (error) {
-    console.error('Error in updateUserAddress:', error)
+    console.error('Error in updateUserProduct:', error)
     res.status(500).render('products/userProducts/userProducts', { error: 'Internal Server Error' })
   }
 }
@@ -121,7 +121,7 @@ const postUpdateUserProduct = async (req, res) => {
     return res.status(201).redirect('/user/account/userProducts')
 
   } catch (error) {
-    console.error('Error in postUpdateUserAddress:', error)
+    console.error('Error in postUpdateUserProduct:', error)
     res.status(500).render('products/userProducts/userProducts', { error: 'Internal Server Error' })
   }
 }
@@ -130,17 +130,44 @@ const deleteUserProduct = async (req, res) => {
   try {
     const id = await req.params.id
     
-    // const product = await productModel.getOne(id)
+    const product = await productModel.getOne(id)
 
-    // if (!product) {
-    //   res.status(400).redirect('/user/account/userProducts')
-    // }
+    if (!product) {
+      res.status(400).redirect('/user/account/userProducts')
+    }
 
     await productModel.deleteUserProduct(id)
 
     return res.status(201).redirect('/user/account/userProducts')
   } catch (error) {
-    console.error('Error in deleteUserAddress:', error)
+    console.error('Error in deleteUserProduct:', error)
+    res.status(500).render('products/userProducts/userProducts', { error: 'Internal Server Error' })
+  }
+}
+
+const detailUserProduct = async (req, res) => {
+  try {
+    const id = await req.params.id
+    
+    const product = await productModel.getOne(id)
+
+    if (!product) {
+      res.status(400).redirect('/user/account/userProducts')
+    }
+
+    const context = {
+      id : product.id,
+      itemCategory : product.itemCategory,
+      brand : product.brand,
+      price : product.price,
+      description: product.description,
+      foto : product.foto,
+      isSold : product.isSold
+    }
+
+    return res.status(201).render('products/userProducts/detailUserProduct', { context })
+  } catch (error) {
+    console.error('Error in detailUserProduct:', error)
     res.status(500).render('products/userProducts/userProducts', { error: 'Internal Server Error' })
   }
 }
@@ -149,5 +176,5 @@ const uploadMiddleware = saveImgMiddleware.uploadProductMiddleware
 
 module.exports = {
   getAllProducts, getUserProducts, addUserProduct, postAddUserProduct, 
-  uploadMiddleware, updateUserProduct, postUpdateUserProduct, deleteUserProduct
+  uploadMiddleware, updateUserProduct, postUpdateUserProduct, deleteUserProduct, detailUserProduct
 }

@@ -12,6 +12,7 @@ userProductsRouter.post('/userProducts', productController.uploadMiddleware, pro
 userProductsRouter.get('/userProducts/update/:id', productController.updateUserProduct)
 userProductsRouter.post('/userProducts/update', productController.uploadMiddleware, productController.postUpdateUserProduct)
 userProductsRouter.get('/userProducts/delete/:id', productController.deleteUserProduct)
+userProductsRouter.get('/userProducts/detail/:id', productController.detailUserProduct)
 
 module.exports = {
   userProductsRouter
