@@ -113,7 +113,7 @@ const postUpdateUserProduct = async (req, res) => {
     const foto = req.file.filename
 
     if (!id) {
-      res.status(400).json({ message : 'pekok e, alamat e sopo iki ra ono gob....' })
+      res.status(400).json({ message : 'pekok e, barang e sopo iki ra ono gob....' })
     }
 
     await productModel.update(id, itemCategory, brand, price, description, foto)
@@ -126,8 +126,28 @@ const postUpdateUserProduct = async (req, res) => {
   }
 }
 
+const deleteUserProduct = async (req, res) => {
+  try {
+    const id = await req.params.id
+    
+    // const product = await productModel.getOne(id)
+
+    // if (!product) {
+    //   res.status(400).redirect('/user/account/userProducts')
+    // }
+
+    await productModel.deleteUserProduct(id)
+
+    return res.status(201).redirect('/user/account/userProducts')
+  } catch (error) {
+    console.error('Error in deleteUserAddress:', error)
+    res.status(500).render('products/userProducts/userProducts', { error: 'Internal Server Error' })
+  }
+}
+
 const uploadMiddleware = saveImgMiddleware.uploadProductMiddleware
 
 module.exports = {
-  getAllProducts, getUserProducts, addUserProduct, postAddUserProduct, uploadMiddleware, updateUserProduct, postUpdateUserProduct
+  getAllProducts, getUserProducts, addUserProduct, postAddUserProduct, 
+  uploadMiddleware, updateUserProduct, postUpdateUserProduct, deleteUserProduct
 }

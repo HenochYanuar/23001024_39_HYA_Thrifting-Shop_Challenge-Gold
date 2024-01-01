@@ -39,6 +39,14 @@ const update = async (id, itemCategory, brand, price, description, foto) => {
   }
 }
 
+const deleteUserProduct = async (id) => {
+  try {
+    return await db('goods').where({ id }).del()
+  } catch (error) {
+    throw new Error('Error deleting user product by id')
+  }
+}
+
 module.exports  = {
-  getAll, getUserProducts, create, getOne, update
+  getAll, getUserProducts, create, getOne, update, deleteUserProduct
 }
