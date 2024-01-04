@@ -1,5 +1,6 @@
 const express = require('express')
 const session = require('express-session')
+const methodOverride = require('method-override')
 const path = require('path')
 const bodyParser = require('body-parser')
 const { registerRouter } = require('./routes/register.route')
@@ -14,6 +15,8 @@ const server = express()
 server.set('view engine', 'ejs')
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(express.static(path.join(__dirname, 'public')))
+
+server.use(methodOverride('_method'))
 
 server.use(session({
   secret: 'secret-key',
