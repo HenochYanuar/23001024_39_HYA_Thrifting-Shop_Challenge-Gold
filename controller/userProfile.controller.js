@@ -27,7 +27,6 @@ const postUserProfile = async (req, res) => {
 
   try {
     const { username, name, email, mobile_phone, gender, birthday } = req.body
-    const foto = req.file.filename
 
     let user = await userModel.findByEmail(email)
 
@@ -53,24 +52,54 @@ const postUserProfile = async (req, res) => {
 
     if (!userBio) {
       await userBioModel.create({
-        id, name, gender, birthday, foto,
+        id, name, gender, birthday,
         userID: user.id
       })
     } else {
-      await userBioModel.update(user.id, name, gender, birthday, foto)
+      await userBioModel.update(user.id, name, gender, birthday)
     }
 
     res.status(201).redirect('/user/account/profile')
 
   } catch (error) {
     console.error('Error in postRegisterUser:', error)
-    res.status(500).render('user/userProfile', { error: 'Internal Server Error' })
+    res.status(500).redirect('/user/account/profile')
   }
 
+}
+
+const postFotoProfile = async (req, res) => {
+  try {
+    const foto = req.file.filename
+
+    const user = await userModel.findByEmail(req.session.email)
+
+    if (!user) {
+      res.status(400).render('user/userProfile', { message: `Failed to save user with email ${email}` })
+    }
+
+    const userBio = await userBioModel.findByUserId(user.id)
+    const userFoto = userBio.foto
+
+    if (!userFoto) {
+      await userBioModel.createFotoProfile({
+        userID : user.id,
+        foto,
+      })
+    } else {
+      await userBioModel.updateFotoProfile(user.id, foto)
+    }
+
+    res.status(201).redirect('/user/account/profile')
+
+  } catch (error) {
+    console.error('Error in postFotoProfile:', error)
+    res.status(500).redirect('/user/account/profile')
+  }
 }
 
 const uploadMiddleware = saveImgMiddleware.uploadUserMiddleware
 
 module.exports = {
-  getUserProfile, postUserProfile, uploadMiddleware
+  getUserProfile, postUserProfile, postFotoProfile, uploadMiddleware
 }

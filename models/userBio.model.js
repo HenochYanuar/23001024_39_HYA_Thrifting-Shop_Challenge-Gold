@@ -15,14 +15,26 @@ const create = userBio => {
   return db('usersBio').insert(userBio)
 } 
 
-const update = async (userID, name, gender, birthday, foto) => {
+const createFotoProfile = foto => {
+  return db('usersBio').insert(foto)
+}
+
+const update = async (userID, name, gender, birthday) => {
   try {
-    return await db('usersBio').where({ userID }).update({ name, gender, birthday, foto })
+    return await db('usersBio').where({ userID }).update({ name, gender, birthday })
   } catch (error) {
     throw new Error('Error updateing biografi user by user ID')
   }
 }
 
+const updateFotoProfile = async (userID, foto) => {
+  try {
+    return await db('usersBio').where({ userID }).update({ foto })
+  } catch (error) {
+    throw new Error('Error updateing foto user by user ID')
+  }
+}
+
 module.exports = {
-  findByUserId, create, update
+  findByUserId, create, update, createFotoProfile, updateFotoProfile
 }
