@@ -31,9 +31,9 @@ const getOne = async (id) => {
   }
 }
 
-const update = async (id, itemCategory, brand, price, description, foto) => {
+const update = async (id, item_name, itemCategory, brand, price, description, foto) => {
   try {
-    return await db('goods').where({ id }).update({ itemCategory, brand, price, description, foto })
+    return await db('goods').where({ id }).update({ item_name, itemCategory, brand, price, description, foto })
   } catch (error) {
     throw new Error('Error updateing user product by id')
   }

@@ -8,6 +8,7 @@ const getAllProducts = async (req, res) => {
   const products = allProducts.map((product) => ({
     id : product.id,
     itemCategory : product.itemCategory,
+    item_name : product.item_name,
     brand : product.brand,
     price : product.price,
     description: product.description,
@@ -29,6 +30,7 @@ const getUserProducts = async (req, res) => {
   const products = userProducts.map((product) => ({
     id : product.id,
     itemCategory : product.itemCategory,
+    item_name : product.item_name,
     brand : product.brand,
     price : product.price,
     description: product.description,
@@ -48,7 +50,7 @@ const addUserProduct = async (req, res) => {
 
 const postAddUserProduct = async (req, res) => {
   try {
-    const { itemCategory, brand, price, description } = req.body
+    const { itemCategory, brand, price, description, item_name } = req.body
     const foto = req.file.filename
 
     const user = await userModel.findByEmail(req.session.email)
@@ -68,7 +70,7 @@ const postAddUserProduct = async (req, res) => {
     const isSold = false
 
     await productModel.create({
-      id, itemCategory, brand, price, description, foto, isSold,
+      id, itemCategory, brand, price, description, foto, isSold, item_name,
       userID: user.id
     })
 
@@ -92,6 +94,7 @@ const updateUserProduct = async (req, res) => {
     const context = {
       id : product.id,
       itemCategory : product.itemCategory,
+      item_name : product.item_name,
       brand : product.brand,
       price : product.price,
       description: product.description,
@@ -109,14 +112,14 @@ const updateUserProduct = async (req, res) => {
 
 const postUpdateUserProduct = async (req, res) => {
   try {
-    const { id, itemCategory, brand, price, description } = req.body
+    const { id, itemCategory, brand, price, description, item_name } = req.body
     const foto = req.file.filename
 
     if (!id) {
       res.status(400).json({ message : 'pekok e, barang e sopo iki ra ono gob....' })
     }
 
-    await productModel.update(id, itemCategory, brand, price, description, foto)
+    await productModel.update(id, item_name, itemCategory, brand, price, description, foto)
 
     return res.status(201).redirect('/user/account/userProducts')
 
@@ -158,6 +161,7 @@ const detailUserProduct = async (req, res) => {
     const context = {
       id : product.id,
       itemCategory : product.itemCategory,
+      item_name : product.item_name,
       brand : product.brand,
       price : product.price,
       description: product.description,
