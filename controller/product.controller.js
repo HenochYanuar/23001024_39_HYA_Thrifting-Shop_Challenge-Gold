@@ -89,6 +89,7 @@ const updateUserProduct = async (req, res) => {
 
     if (!product) {
       res.status(400).redirect('/user/account/userProducts')
+      return
     }
 
     const context = {
@@ -117,6 +118,7 @@ const postUpdateUserProduct = async (req, res) => {
 
     if (!id) {
       res.status(400).json({ message : 'pekok e, barang e sopo iki ra ono gob....' })
+      return
     }
 
     await productModel.update(id, item_name, itemCategory, brand, price, description, foto)
@@ -137,6 +139,7 @@ const deleteUserProduct = async (req, res) => {
 
     if (!product) {
       res.status(400).redirect('/user/account/userProducts')
+      return
     }
 
     await productModel.deleteUserProduct(id)
@@ -156,6 +159,7 @@ const detailUserProduct = async (req, res) => {
 
     if (!product) {
       res.status(400).redirect('/user/account/userProducts')
+      return
     }
 
     const context = {

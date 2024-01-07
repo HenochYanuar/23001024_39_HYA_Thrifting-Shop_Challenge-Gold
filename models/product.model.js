@@ -5,7 +5,7 @@ const db = knex(knexConfig.development)
 
 const getAll = async () => {
   try {
-    return await db('goods').select()
+    return await db('goods').where('isSold', false).select()
   } catch (error) {
     throw new Error('Error geting all item products')
   }

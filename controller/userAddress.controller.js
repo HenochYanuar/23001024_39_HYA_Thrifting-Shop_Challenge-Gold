@@ -64,7 +64,7 @@ const updateUserAddres = async (req, res) => {
     const address = await userAddressModel.getOne(id)
 
     if (!address) {
-      res.status(400).redirect('/user/account/address')
+      return res.status(400).redirect('/user/account/address')
     }
 
     const context = {
@@ -91,6 +91,7 @@ const postUpdateUserAddress = async (req, res) => {
 
     if (!id) {
       res.status(400).json({ message : 'pekok e, alamat e sopo iki ra ono gob....' })
+      return
     }
 
     await userAddressModel.update(id, province, regency, subdistrict, postalCode, addressDetail, userID)
@@ -111,6 +112,7 @@ const deleteUserAddress = async (req, res) => {
 
     if (!address) {
       res.status(400).redirect('/user/account/address')
+      return
     }
 
     await userAddressModel.deleteUserAddress(id)
