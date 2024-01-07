@@ -9,6 +9,7 @@ const { productRouter } = require('./routes/product.route')
 const { profileRouter } = require('./routes/userProfile.route')
 const { addressRouter } = require('./routes/userAddress.route')
 const { userProductsRouter } = require('./routes/userProducts.route')
+const { orderRouter } = require('./routes/order.route')
 const port = 3000
 
 const server = express()
@@ -36,6 +37,7 @@ server.use('/', productRouter)
 server.use('/user/account', profileRouter)
 server.use('/user/account', addressRouter)
 server.use('/user/account', userProductsRouter)
+server.use('/', orderRouter)
 
 
 server.listen(port, () => console.log(`Server is running at http://localhost:${port}`))

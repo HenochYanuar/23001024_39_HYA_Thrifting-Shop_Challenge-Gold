@@ -47,6 +47,14 @@ const deleteUserProduct = async (id) => {
   }
 }
 
+const isSoldUpdate = async (id) => {
+  try {
+    return await db('goods').where({ id }).update('isSold', true)
+  } catch (error) {
+    throw new Error('Error updateing isSold field')   
+  }
+}
+
 module.exports  = {
-  getAll, getUserProducts, create, getOne, update, deleteUserProduct
+  getAll, getUserProducts, create, getOne, update, deleteUserProduct, isSoldUpdate
 }
