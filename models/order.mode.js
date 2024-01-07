@@ -4,7 +4,7 @@ const knexConfig = require('../knexfile')
 const db = knex(knexConfig.development) 
 
 
-const checkout = async (data) => {
+const buyProduct = async (data) => {
   try {
     return await db('orders').insert( data )
   } catch (error) {
@@ -13,5 +13,5 @@ const checkout = async (data) => {
 }
 
 module.exports = {
-  checkout,
+  buyProduct,
 }

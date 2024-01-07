@@ -2,7 +2,7 @@ const userModel = require('../models/user.model')
 const productModel = require('../models/product.model')
 const orderModel = require('../models/order.mode')
 
-const buyProduct = async (req, res) => {
+const checkout = async (req, res) => {
   try {
     const user = await userModel.findByEmail(req.session.email)
     const userID = user.id
@@ -38,7 +38,7 @@ const buyProduct = async (req, res) => {
   }
 }
 
-const checkout = async (req, res) => {
+const buyProduct = async (req, res) => {
   try {
     
     const goodsID = await req.params.id
@@ -65,7 +65,7 @@ const checkout = async (req, res) => {
 
     const id = `${year}${month}${date}${hours}${minutes}${seconds}${milliseconds}`
 
-    await orderModel.checkout({ id, userID, goodsID })
+    await orderModel.buyProduct({ id, userID, goodsID })
 
     // const isSold = true
     await productModel.isSoldUpdate(goodsID)
