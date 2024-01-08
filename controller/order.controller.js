@@ -1,6 +1,7 @@
 const userModel = require('../models/user.model')
 const productModel = require('../models/product.model')
 const orderModel = require('../models/order.mode')
+const idCreator = require('../utils/idCreator')
 
 const checkout = async (req, res) => {
   try {
@@ -53,17 +54,7 @@ const buyProduct = async (req, res) => {
     const user = await userModel.findByEmail(req.session.email)
     const userID = user.id
 
-    const itemId = new Date()
-
-    const year = itemId.getFullYear()
-    const month = itemId.getMonth() + 1
-    const date = itemId.getDate()
-    const hours = itemId.getHours()
-    const minutes = itemId.getMinutes()
-    const seconds = itemId.getSeconds()
-    const milliseconds = itemId.getMilliseconds()
-
-    const id = `${year}${month}${date}${hours}${minutes}${seconds}${milliseconds}`
+    const id = await idCreator.createID()
 
     await orderModel.buyProduct({ id, userID, goodsID })
 

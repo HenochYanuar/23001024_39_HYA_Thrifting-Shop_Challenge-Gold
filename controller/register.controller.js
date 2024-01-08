@@ -1,5 +1,6 @@
 const userModel = require('../models/user.model')
 const bcrypt = require('bcrypt')
+const idCreator = require('../utils/idCreator')
 const MailRegister = require('../middleware/mailRegister')
 
 const registerUser = (req, res) => {
@@ -25,17 +26,7 @@ const postRegisterUser = async (req, res) => {
 
       let user = await userModel.findByEmail(email)
 
-      const userId = new Date()
-
-      const year = userId.getFullYear()
-      const month = userId.getMonth() + 1
-      const date = userId.getDate()
-      const hours = userId.getHours()
-      const minutes = userId.getMinutes()
-      const seconds = userId.getSeconds()
-      const milliseconds = userId.getMilliseconds()
-
-      const id = `${year}${month}${date}${hours}${minutes}${seconds}${milliseconds}`
+      const id = await idCreator.createID()
 
       const isActive = false
       const hashPassword = await bcrypt.hash(password, 10)

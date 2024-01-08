@@ -15,8 +15,8 @@ const create = userBio => {
   return db('usersBio').insert(userBio)
 } 
 
-const createFotoProfile = foto => {
-  return db('usersBio').insert(foto)
+const createFotoProfile = (data) => {
+  return db('usersBio').insert(data)
 }
 
 const update = async (userID, name, gender, birthday) => {

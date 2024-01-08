@@ -1,6 +1,7 @@
 const productModel = require('../models/product.model')
 const userModel = require('../models/user.model')
 const saveImgMiddleware = require('../middleware/saveImgMiddleware')
+const idCreator = require('../utils/idCreator')
 
 const getAllProducts = async (req, res) => {
   const allProducts = await productModel.getAll() 
@@ -55,17 +56,7 @@ const postAddUserProduct = async (req, res) => {
 
     const user = await userModel.findByEmail(req.session.email)
 
-    const itemId = new Date()
-
-    const year = itemId.getFullYear()
-    const month = itemId.getMonth() + 1
-    const date = itemId.getDate()
-    const hours = itemId.getHours()
-    const minutes = itemId.getMinutes()
-    const seconds = itemId.getSeconds()
-    const milliseconds = itemId.getMilliseconds()
-
-    const id = `${year}${month}${date}${hours}${minutes}${seconds}${milliseconds}`
+    const id = await idCreator.createID()
 
     const isSold = false
 

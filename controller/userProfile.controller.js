@@ -1,6 +1,7 @@
 const userModel = require('../models/user.model')
 const userBioModel = require('../models/userBio.model')
 const saveImgMiddleware = require('../middleware/saveImgMiddleware')
+const idCreator = require('../utils/idCreator')
 
 const getUserProfile = async (req, res) => {
   const user = await userModel.findByEmail(req.session.email)
@@ -13,13 +14,17 @@ const getUserProfile = async (req, res) => {
     name: '', gendre: '', birthday: '', foto: ''
   }
 
-  if (userBio != undefined) {
-    const { name, gender, birthday, foto } = userBio
+  if (!userBio) {
+    res.status(200).render('user/userProfile', { context })
+    return
+  }
+
+  const { name, gender, birthday, foto } = userBio
 
     context = {
       username, mobile_phone, email, name, gender, birthday, foto
     }
-  }
+
   res.status(200).render('user/userProfile', { context })
 }
 
@@ -38,17 +43,7 @@ const postUserProfile = async (req, res) => {
 
     let userBio = await userBioModel.findByUserId(user.id)
 
-    const userId = new Date()
-
-    const year = userId.getFullYear()
-    const month = userId.getMonth() + 1
-    const date = userId.getDate()
-    const hours = userId.getHours()
-    const minutes = userId.getMinutes()
-    const seconds = userId.getSeconds()
-    const milliseconds = userId.getMilliseconds()
-
-    const id = `${year}${month}${date}${hours}${minutes}${seconds}${milliseconds}`
+    const id = await idCreator.createID()
 
     if (!userBio) {
       await userBioModel.create({
@@ -76,19 +71,22 @@ const postFotoProfile = async (req, res) => {
 
     if (!user) {
       res.status(400).render('user/userProfile', { message: `Failed to save user with email ${email}` })
+      return
     }
 
     const userBio = await userBioModel.findByUserId(user.id)
-    const userFoto = userBio.foto
 
-    if (!userFoto) {
+    const id = await idCreator.createID()
+
+    if (!userBio) {
       await userBioModel.createFotoProfile({
+        id, foto,
         userID : user.id,
-        foto,
       })
-    } else {
-      await userBioModel.updateFotoProfile(user.id, foto)
     }
+
+    await userBioModel.updateFotoProfile(user.id, foto)
+    
 
     res.status(201).redirect('/user/account/profile')
 

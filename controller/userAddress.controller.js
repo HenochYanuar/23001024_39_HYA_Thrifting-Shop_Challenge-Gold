@@ -1,5 +1,6 @@
 const userModel = require('../models/user.model')
 const userAddressModel = require('../models/userAddress.model')
+const idCreator = require('../utils/idCreator')
 
 const getUserAddress = async (req, res) => {
   const user = await userModel.findByEmail(req.session.email)
@@ -32,17 +33,7 @@ const postAddUserAddress = async (req, res) => {
 
     const user = await userModel.findByEmail(req.session.email)
 
-    const addressId = new Date()
-
-    const year = addressId.getFullYear()
-    const month = addressId.getMonth() + 1
-    const date = addressId.getDate()
-    const hours = addressId.getHours()
-    const minutes = addressId.getMinutes()
-    const seconds = addressId.getSeconds()
-    const milliseconds = addressId.getMilliseconds()
-
-    const id = `${year}${month}${date}${hours}${minutes}${seconds}${milliseconds}`
+    const id = await idCreator.createID()
 
     await userAddressModel.create({
       id, province, regency, subdistrict, postalCode, addressDetail,
