@@ -4,17 +4,17 @@ const saveImgMiddleware = require('../middleware/saveImgMiddleware')
 const idCreator = require('../utils/idCreator')
 
 const getAllProducts = async (req, res) => {
-  const allProducts = await productModel.getAll() 
+  const allProducts = await productModel.getAll()
 
   const products = allProducts.map((product) => ({
-    id : product.id,
-    itemCategory : product.itemCategory,
-    item_name : product.item_name,
-    brand : product.brand,
-    price : product.price,
+    id: product.id,
+    itemCategory: product.itemCategory,
+    item_name: product.item_name,
+    brand: product.brand,
+    price: product.price,
     description: product.description,
-    foto : product.foto,
-    isSold : product.isSold
+    foto: product.foto,
+    isSold: product.isSold
   }))
 
   const context = {
@@ -25,24 +25,58 @@ const getAllProducts = async (req, res) => {
 }
 
 const getUserProducts = async (req, res) => {
-  const user = await userModel.findByEmail(req.session.email)
-  const userProducts = await productModel.getUserProducts(user.id)
+  try {
+    const user = await userModel.findByEmail(req.session.email)
+    let userProducts = await productModel.getUserProducts(user.id)
 
-  const products = userProducts.map((product) => ({
-    id : product.id,
-    itemCategory : product.itemCategory,
-    item_name : product.item_name,
-    brand : product.brand,
-    price : product.price,
-    description: product.description,
-    foto : product.foto,
-    isSold : product.isSold
-  }))
+    let products = userProducts.map((product) => productModel.getProductObject(product))
 
-  const context = {
-    products
+    const context = {
+      products,
+      query : "all"
+    }
+
+    const query = req.query.type
+
+    if (query === "forSale") {
+      userProducts = await productModel.getForSaleProducts(user.id)
+      products = userProducts.map((product) => productModel.getProductObject(product))
+      const context = {
+        products,
+        query : "forSale"
+      }
+      return res.status(200).render('products/userProducts/userProducts', { context })
+
+    } else if (query === "sold") {
+      userProducts = await productModel.getSoldProducts(user.id)
+      products = userProducts.map((product) => productModel.getProductObject(product))
+      const context = {
+        products,
+        query : "sold"
+      }
+      return res.status(200).render('products/userProducts/userProducts', { context })
+      
+    } else if (query === "purchased") {
+      userProducts = await productModel.getPurchasedProducts(user.id)
+      products = userProducts.map((product) => productModel.getProductObject(product))
+      const context = {
+        products,
+        query : "purchased"
+      }
+      return res.status(200).render('products/userProducts/userProducts', { context })
+
+    } else if (query === "all") {
+      return res.status(200).render('products/userProducts/userProducts', { context })
+
+    } else {
+      return res.status(200).redirect('/user/account/userProducts?type=all')
+    }
+
+    
+  } catch (error) {
+    console.error('Error in getUserProduct:', error)
+    res.status(500).render('products/userProducts/userProducts', { error: 'Internal Server Error' })
   }
-  return res.status(200).render('products/userProducts/userProducts', { context })
 }
 
 const addUserProduct = async (req, res) => {
@@ -75,7 +109,7 @@ const postAddUserProduct = async (req, res) => {
 const updateUserProduct = async (req, res) => {
   try {
     const id = await req.params.id
-    
+
     const product = await productModel.getOne(id)
 
     if (!product) {
@@ -84,14 +118,14 @@ const updateUserProduct = async (req, res) => {
     }
 
     const context = {
-      id : product.id,
-      itemCategory : product.itemCategory,
-      item_name : product.item_name,
-      brand : product.brand,
-      price : product.price,
+      id: product.id,
+      itemCategory: product.itemCategory,
+      item_name: product.item_name,
+      brand: product.brand,
+      price: product.price,
       description: product.description,
-      foto : product.foto,
-      isSold : product.isSold
+      foto: product.foto,
+      isSold: product.isSold
     }
 
     return res.status(201).render('products/userProducts/formUpdateUserProduct', { context })
@@ -108,7 +142,7 @@ const postUpdateUserProduct = async (req, res) => {
     const foto = req.file.filename
 
     if (!id) {
-      res.status(400).json({ message : 'pekok e, barang e sopo iki ra ono gob....' })
+      res.status(400).json({ message: 'pekok e, barang e sopo iki ra ono gob....' })
       return
     }
 
@@ -125,7 +159,7 @@ const postUpdateUserProduct = async (req, res) => {
 const deleteUserProduct = async (req, res) => {
   try {
     const id = await req.params.id
-    
+
     const product = await productModel.getOne(id)
 
     if (!product) {
@@ -145,7 +179,7 @@ const deleteUserProduct = async (req, res) => {
 const detailUserProduct = async (req, res) => {
   try {
     const id = await req.params.id
-    
+
     const product = await productModel.getOne(id)
 
     if (!product) {
@@ -154,14 +188,14 @@ const detailUserProduct = async (req, res) => {
     }
 
     const context = {
-      id : product.id,
-      itemCategory : product.itemCategory,
-      item_name : product.item_name,
-      brand : product.brand,
-      price : product.price,
+      id: product.id,
+      itemCategory: product.itemCategory,
+      item_name: product.item_name,
+      brand: product.brand,
+      price: product.price,
       description: product.description,
-      foto : product.foto,
-      isSold : product.isSold
+      foto: product.foto,
+      isSold: product.isSold
     }
 
     return res.status(201).render('products/userProducts/detailUserProduct', { context })
@@ -174,6 +208,6 @@ const detailUserProduct = async (req, res) => {
 const uploadMiddleware = saveImgMiddleware.uploadProductMiddleware
 
 module.exports = {
-  getAllProducts, getUserProducts, addUserProduct, postAddUserProduct, 
+  getAllProducts, getUserProducts, addUserProduct, postAddUserProduct,
   uploadMiddleware, updateUserProduct, postUpdateUserProduct, deleteUserProduct, detailUserProduct
 }

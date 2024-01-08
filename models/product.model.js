@@ -55,6 +55,55 @@ const isSoldUpdate = async (id) => {
   }
 }
 
+const getProductObject = (product) => {
+  return {
+    id: product.id,
+    itemCategory: product.itemCategory,
+    item_name: product.item_name,
+    brand: product.brand,
+    price: product.price,
+    description: product.description,
+    foto: product.foto,
+    isSold: product.isSold
+  }
+}
+
+const getForSaleProducts = async (userID) => {
+  try {
+    return await db('goods').where({ userID, isSold : false }).select()
+  } catch (error) {
+    throw new Error('Error geting for sale products ')
+  }
+}
+
+const getSoldProducts = async (userID) => {
+  try {
+    return await db('goods').where({ userID, isSold : true }).select()
+  } catch (error) {
+    throw new Error('Error geting for sale products ')
+  }
+}
+
+const getPurchasedProducts = async (userID) => {
+  try {
+    return await db('orders')
+      .join('goods', 'orders.goodsID', '=', 'goods.id')
+      .select('goods.*')
+      .where('orders.userID', userID)
+  } catch (error) {
+    throw new Error('Error geting purchased products ')
+  }
+}
+
+const getProductByGoodsId = async (id) => {
+  try {
+    return await db('goods').where({ id }).first()
+  } catch (error) {
+    throw new Error('Error geting products by id ')
+  }
+}
+
 module.exports  = {
-  getAll, getUserProducts, create, getOne, update, deleteUserProduct, isSoldUpdate
+  getAll, getUserProducts, create, getOne, update, deleteUserProduct, isSoldUpdate,
+  getForSaleProducts, getProductObject, getSoldProducts, getPurchasedProducts, getProductByGoodsId
 }
