@@ -1,13 +1,32 @@
 const knex = require('knex')
 const knexConfig = require('../knexfile')
 
-const db = knex(knexConfig.development) 
+const db = knex(knexConfig.development)
 
 const getAll = async () => {
   try {
     return await db('goods').where('isSold', false).select()
   } catch (error) {
     throw new Error('Error geting all item products')
+  }
+}
+
+const getAllByQuery = async (searchQuery) => {
+  try {
+    return await db('goods')
+      .where((builder) => {
+        builder.where('itemCategory', 'ILIKE', `%${searchQuery}%`)
+          .orWhere('brand', 'ILIKE', `%${searchQuery}%`)
+          .orWhere('item_name', 'ILIKE', `%${searchQuery}%`);
+      })
+      .andWhere((builder) => {
+        builder.where('isSold', '=', false);
+      })
+      .select()
+
+  } catch (error) {
+    console.error('Error getting all by query item products:', error)
+    throw new Error('Error geting all by query item products')
   }
 }
 
@@ -20,7 +39,7 @@ const getUserProducts = async (userID) => {
 }
 
 const create = async (item) => {
-  return await db('goods').insert( item )
+  return await db('goods').insert(item)
 }
 
 const getOne = async (id) => {
@@ -51,7 +70,7 @@ const isSoldUpdate = async (id) => {
   try {
     return await db('goods').where({ id }).update('isSold', true)
   } catch (error) {
-    throw new Error('Error updateing isSold field')   
+    throw new Error('Error updateing isSold field')
   }
 }
 
@@ -70,7 +89,7 @@ const getProductObject = (product) => {
 
 const getForSaleProducts = async (userID) => {
   try {
-    return await db('goods').where({ userID, isSold : false }).select()
+    return await db('goods').where({ userID, isSold: false }).select()
   } catch (error) {
     throw new Error('Error geting for sale products ')
   }
@@ -78,7 +97,7 @@ const getForSaleProducts = async (userID) => {
 
 const getSoldProducts = async (userID) => {
   try {
-    return await db('goods').where({ userID, isSold : true }).select()
+    return await db('goods').where({ userID, isSold: true }).select()
   } catch (error) {
     throw new Error('Error geting for sale products ')
   }
@@ -103,7 +122,7 @@ const getProductByGoodsId = async (id) => {
   }
 }
 
-module.exports  = {
-  getAll, getUserProducts, create, getOne, update, deleteUserProduct, isSoldUpdate,
+module.exports = {
+  getAll, getUserProducts, create, getOne, update, deleteUserProduct, isSoldUpdate, getAllByQuery,
   getForSaleProducts, getProductObject, getSoldProducts, getPurchasedProducts, getProductByGoodsId
 }

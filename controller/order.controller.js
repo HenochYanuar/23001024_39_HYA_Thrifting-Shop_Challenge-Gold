@@ -61,7 +61,7 @@ const buyProduct = async (req, res) => {
     // const isSold = true
     await productModel.isSoldUpdate(goodsID)
 
-    res.status(201).redirect('/user/account/userProducts')
+    res.status(201).redirect('/user/account/userProducts?type=purchased')
 
   } catch (error) {
     

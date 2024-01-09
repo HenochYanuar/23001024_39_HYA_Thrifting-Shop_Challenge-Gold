@@ -4,18 +4,17 @@ const saveImgMiddleware = require('../middleware/saveImgMiddleware')
 const idCreator = require('../utils/idCreator')
 
 const getAllProducts = async (req, res) => {
-  const allProducts = await productModel.getAll()
+  const searchQuery = req.query.search
 
-  const products = allProducts.map((product) => ({
-    id: product.id,
-    itemCategory: product.itemCategory,
-    item_name: product.item_name,
-    brand: product.brand,
-    price: product.price,
-    description: product.description,
-    foto: product.foto,
-    isSold: product.isSold
-  }))
+  let allProducts
+
+  if (searchQuery) {
+    allProducts = await productModel.getAllByQuery(searchQuery)
+  } else {
+    allProducts = await productModel.getAll()
+  }
+
+  const products = allProducts.map((product) => productModel.getProductObject(product));
 
   const context = {
     products
@@ -33,7 +32,7 @@ const getUserProducts = async (req, res) => {
 
     const context = {
       products,
-      query : "all"
+      query: "all"
     }
 
     const query = req.query.type
@@ -43,7 +42,7 @@ const getUserProducts = async (req, res) => {
       products = userProducts.map((product) => productModel.getProductObject(product))
       const context = {
         products,
-        query : "forSale"
+        query: "forSale"
       }
       return res.status(200).render('products/userProducts/userProducts', { context })
 
@@ -52,16 +51,16 @@ const getUserProducts = async (req, res) => {
       products = userProducts.map((product) => productModel.getProductObject(product))
       const context = {
         products,
-        query : "sold"
+        query: "sold"
       }
       return res.status(200).render('products/userProducts/userProducts', { context })
-      
+
     } else if (query === "purchased") {
       userProducts = await productModel.getPurchasedProducts(user.id)
       products = userProducts.map((product) => productModel.getProductObject(product))
       const context = {
         products,
-        query : "purchased"
+        query: "purchased"
       }
       return res.status(200).render('products/userProducts/userProducts', { context })
 
@@ -72,7 +71,7 @@ const getUserProducts = async (req, res) => {
       return res.status(200).redirect('/user/account/userProducts?type=all')
     }
 
-    
+
   } catch (error) {
     console.error('Error in getUserProduct:', error)
     res.status(500).render('products/userProducts/userProducts', { error: 'Internal Server Error' })
