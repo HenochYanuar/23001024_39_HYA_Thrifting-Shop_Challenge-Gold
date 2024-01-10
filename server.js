@@ -1,4 +1,5 @@
 const express = require('express')
+const expressLayouts = require('express-ejs-layouts')
 const session = require('express-session')
 const methodOverride = require('method-override')
 const path = require('path')
@@ -14,6 +15,7 @@ const port = 3000
 
 const server = express()
 server.set('view engine', 'ejs')
+server.set('views', path.join(__dirname, 'views'))
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(express.static(path.join(__dirname, 'public')))
 
@@ -24,7 +26,7 @@ server.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-      maxAge: 7200000,
+    maxAge: 7200000,
   },
 }))
 
@@ -33,6 +35,9 @@ server.use(express.json())
 
 server.use('/user/register', registerRouter)
 server.use('/user/login', loginRouter)
+
+server.use(expressLayouts)
+
 server.use('/', productRouter)
 server.use('/user/account', profileRouter)
 server.use('/user/account', addressRouter)
