@@ -1,116 +1,168 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thrifting Shop | User Profile</title>
-    <link rel="stylesheet" href="/css/userProfile.css">
-  </head>
-  <body>
-    <div class="profile-container">
-      <div class="profile-info">
-        <div class="box-info">
-          <h2>Profil Saya</h2>
-          <div class="desc-info">
-            Kelola Informasi Profil Pribadi Anda
+<div class="container-fluid">
+  <div class="row row-cols-1 row-cols-md-2">
+    <div class="col-md-3 mb-3 mt-3">
+      <!-- Empty column -->
+    </div>
+    <div class="col-md-9 mb-3 mt-3">
+      <div class="card shadow-sm">
+        <div class="card-header pb-0">
+          <div class="container-fluid">
+            <h4>Profile Saya</h4>
+            <p>Kelola informasi profil Anda untuk mengontrol, melindungi dan mengamankan akun</p>
           </div>
         </div>
-        <form action="/user/account/profile" method="POST" enctype="multipart/form-data">
-          <table class="form-table">
-            <tr>
-              <td class="lable-container">
-                <label for="username">Username</label>
-              </td>
-              <td class="input-container">
-                <div class="input">
-                  <input type="text" id="username" name="username" value="<%= context.username %>">
+        <div class="row row-cols-1 row-cols-md-2">
+          <div class="col-lg-9 mb-3">
+            <div class="card-body" style="box-shadow: 5px 0 5px -5px rgba(163, 163, 163, 0.5);">
+              <div>
+                <form action="/user/account/profile" method="POST">
+                  <table class="table table-borderless">
+                    <tr>
+                      <td>
+                        <label for="username">Username</label>
+                      </td>
+                      <td>
+                        <div class="form-group">
+                          <input type="text" id="username" name="username" class="form-control w-100"
+                            placeholder="Username" value="<%= context.session.username %>">
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="name">Nama</label>
+                      </td>
+                      <td>
+                        <div class="form-group">
+                          <% if (!context.userBio) { %>
+                          <input type="text" id="name" name="name" class="form-control w-100"
+                            placeholder="Your Name" value>
+                          <% } else { %>
+                          <input type="text" id="name" name="name" class="form-control w-100"
+                            value="<%= context.userBio.name %>">
+                          <% } %>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="email">E-mail</label>
+                      </td>
+                      <td>
+                        <div class="form-group">
+                          <input type="email" id="email" name="email" readonly class="form-control w-100"
+                            value="<%= context.session.email %>">
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="mobile_phone">Nomor Telepon</label>
+                      </td>
+                      <td>
+                        <div class="form-group">
+                          <input type="tel" id="mobile_phone" name="mobile_phone" class="form-control w-100"
+                            placeholder="Phone Number" value="<%= context.session.mobile_phone %>">
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label>Jenis Kelamin</label>
+                      </td>
+                      <td>
+                        <div class="form-group">
+                          <% if (!context.userBio) { %>
+                          <div class="form-check custom-radio form-check-inline">
+                            <input type="radio" id="gender_male" name="gender" value="Laki-laki" class="form-check-input">
+                            <label for="gender_male" class="form-check-label">Pria</label>
+                          </div>
+                          <div class="form-check custom-radio form-check-inline">
+                            <input type="radio" id="gender_female" name="gender" value="Wanita" class="form-check-input">
+                            <label for="gender_female" class="form-check-label">Wanita</label>
+                          </div>
+                          <% } else { %>
+                          <div class="form-check custom-radio form-check-inline">
+                            <input type="radio" id="gender_male" name="gender" value="Laki-laki" class="form-check-input"
+                              <%=context.userBio.gender === 'Laki-laki' ? 'checked' : '' %>>
+                            <label for="gender_male" class="form-check-label">Pria</label>
+                          </div>
+                          <div class="form-check custom-radio form-check-inline">
+                            <input type="radio" id="gender_female" name="gender" value="Wanita" class="form-check-input"
+                              <%=context.userBio.gender === 'Wanita' ? 'checked' : '' %>>
+                            <label for="gender_female" class="form-check-label">Wanita</label>
+                          </div>
+                          <% } %>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="birthday">Tanggal Lahir</label>
+                      </td>
+                      <td>
+                        <div class="form-group">
+                          <% if (!context.userBio) { %>
+                          <input type="date" id="birthday" name="birthday" class="form-control w-100" value>
+                          <% } else { %>
+                          <input type="date" id="birthday" name="birthday" class="form-control w-100"
+                            value="<%= context.userBio.birthday ? context.userBio.birthday.toLocaleDateString('en-CA') : '' %>">
+                          <% } %>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label></label>
+                      </td>
+                      <td>
+                        <div>
+                          <button class="btn btn-info pb-2" type="submit"
+                          style="background-color: #f23567; border: #f23567;"
+                          onMouseOver="this.style.outline='solid 1px #f23567'; this.style.background='#f5497b'; this.style.transform= 'scale(1.1)'; this.style.transition='transform 0.3s ease'"
+                          onMouseOut="this.style.outline='none'; this.style.transform= 'none'; this.style.background='#f23567';">
+                            Simpan
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 mb-3">
+            <div class="card-body">
+              <div class="container-fluid">
+                <form action="/user/account/profile/foto" method="POST" enctype="multipart/form-data">
+                  <div class="container-fluid p-3 d-flex align-items-center justify-content-center">
+                    <label for="foto" style="cursor: pointer;">
+                      <% if (!context.userBio) { %>
+                        <img class="shadow" id="profilePhotoPreview" style="width: 120px; height: 120px; border-radius: 50%; border: solid 1px #f23567;" src="/user-foto.png" alt="Profile Photo">
+                      <% } else { %>
+                        <img class="shadow" id="profilePhotoPreview" style="width: 120px; height: 120px; border-radius: 50%; border: solid 1px #f23567;" src="/img/users/<%= context.userBio.foto %>" alt="Profile Photo">
+                      <% } %>
+                      <input type="file" id="foto" name="foto" style="display: none;" accept="image/*">
+                    </label>
+                  </div>
+                  <div class="container-fluid d-flex align-items-center justify-content-center">
+                    <button class="btn btn-info pb-2 mb-3" type="submit"
+                    style="background-color: #f23567; border: #f23567;"
+                    onMouseOver="this.style.outline='solid 1px #f23567'; this.style.background='#f5497b'; this.style.transform= 'scale(1.1)'; this.style.transition='transform 0.3s ease'"
+                    onMouseOut="this.style.outline='none'; this.style.transform= 'none'; this.style.background='#f23567';">
+                      Upload
+                    </button>
+                  </div>
+                </form>
+                <div class="container-fluid text-center" style="color: rgb(149, 149, 149);">
+                  <p class="mb-0">Format Gambar</p>
+                  <p>JPG, PNG, JPEG</p>
                 </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="lable-container">
-                <label for="name">Nama</label>
-              </td>
-              <td class="input-container">
-                <div class="input">
-                  <input type="text" id="name" name="name" value="<%= context.name %>">
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="lable-container">
-                <label for="email">E-mail</label>
-              </td>
-              <td class="input-container">
-                <div class="input">
-                  <input type="email" id="email" name="email" readonly value="<%= context.email %>">
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="lable-container">
-                <label for="mobile_phone">Nomor Telepon</label>
-              </td>
-              <td class="input-container">
-                <div class="input">
-                  <input type="tel" id="mobile_phone" name="mobile_phone" value="<%= context.mobile_phone %>">
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="lable-container">
-                <label for="gender">Jenis Kelamin</label>
-              </td>
-              <td class="input-container">
-                <div class="radio-input">
-                  <input type="radio" id="gender" name="gender"
-                    value="Laki-laki" <%= context.gender === 'Laki-laki' ? 'checked' : '' %> >
-                  <label for="gender">Pria</label>
-                  <input type="radio" id="gender" name="gender"
-                    value="Wanita" <%= context.gender === 'Wanita' ? 'checked' : '' %> >
-                  <label for="gender">Wanita</label>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="lable-container">
-                <label for="birthday">Tanggal Lahir</label>
-              </td>
-              <td class="input-container">
-                <div class="input">
-                  <input type="date" id="birthday" name="birthday">
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="lable-container">
-                <label for="foto">Foto Profil</label>
-              </td>
-              <td class="input-container">
-                <div class="input">
-                  <input type="file" id="foto" name="foto" value="<%= context.foto %>">
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="lable-container"><label>
-                <img style="width: 50px;" src="/img/users/<%= context.foto %>" alt="">
-              </label></td>
-              <td class="input-container">
-                <div class="profile-actions">
-                  <button type="submit">Simpan</button>
-                </div>
-              </td>
-            </tr>
-          </table>
-        </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
-    <script>
-      var birthdayDate = new Date('<%= context.birthday.toISOString() %>');
-      birthdayDate.setMinutes(birthdayDate.getMinutes() - birthdayDate.getTimezoneOffset());
-      document.getElementById('birthday').value = birthdayDate.toISOString().slice(0,10);
-    </script>
-  </body>
-</html>
+  </div>
+</div>
