@@ -1,0 +1,48 @@
+<div class="card ml-5 shadow-none" style="background-color: #F5F5F5;">
+  <div class="card-header pt-3">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center">
+        <% if (!context.userBio) { %>
+          <img id="profilePhotoPreview" style="width: 60px; height: 60px; border-radius: 50%; border: solid 1px #f23567;" 
+          src="/user-foto.png" alt="Profile Photo">
+        <% } else { %>
+          <img id="profilePhotoPreview" style="width: 60px; height: 60px; border-radius: 50%; border: solid 1px #f23567;" 
+          src="/img/users/<%= context.userBio.foto %>" alt="Profile Photo">
+        <% } %>
+        <div class="ml-3" style="color: #6a6a6a;">
+          <h5 style=" font-size: 20px;"><%= context.session.username %></h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <ul class="list-group">
+      <li class="list-group-item menu-group">
+        <a class="menu" href="/user/account/profile">
+          <i class="fa fa-user-o mr-2 icon"></i> 
+          Akun Saya
+        </a>
+        <ul class="list-group ml-4">
+          <li class="list-group-item menu-group">
+            <a class="sub-menu" href="/user/account/profile">Profil</a>
+          </li>
+          <li class="list-group-item menu-group">
+            <a class="sub-menu" href="/user/account/address">Alamat</a>
+          </li>
+        </ul>
+      </li>
+      <li class="list-group-item menu-group">
+        <a class="menu" href="/user/account/userProducts">
+          <i class="fa fa-cube mr-2 icon"></i>
+          Jualan Saya
+        </a>
+      </li>
+      <li class="list-group-item menu-group">
+        <a class="menu" href="/user/account/userProducts?type=purchased">
+          <i class="fa fa-truck mr-2 icon"></i>
+          Pesanan Saya
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

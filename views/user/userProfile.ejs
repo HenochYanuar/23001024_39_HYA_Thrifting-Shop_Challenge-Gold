@@ -1,10 +1,10 @@
 <div class="container-fluid">
   <div class="row row-cols-1 row-cols-md-2">
     <div class="col-md-3 mb-3 mt-3">
-      <!-- Empty column -->
+      <%- include('../layouts/sidebar') %> <!-- include sidebar from views/layouts/ -->
     </div>
     <div class="col-md-9 mb-3 mt-3">
-      <div class="card shadow-sm">
+      <div class="card shadow-sm mr-5">
         <div class="card-header pb-0">
           <div class="container-fluid">
             <h4>Profile Saya</h4>
@@ -19,7 +19,7 @@
                   <table class="table table-borderless">
                     <tr>
                       <td>
-                        <label for="username">Username</label>
+                        <label style="color: #838383;" for="username">Username</label>
                       </td>
                       <td>
                         <div class="form-group">
@@ -30,7 +30,7 @@
                     </tr>
                     <tr>
                       <td>
-                        <label for="name">Nama</label>
+                        <label style="color: #838383;" for="name">Nama</label>
                       </td>
                       <td>
                         <div class="form-group">
@@ -46,7 +46,7 @@
                     </tr>
                     <tr>
                       <td>
-                        <label for="email">E-mail</label>
+                        <label style="color: #838383;" for="email">E-mail</label>
                       </td>
                       <td>
                         <div class="form-group">
@@ -57,7 +57,7 @@
                     </tr>
                     <tr>
                       <td>
-                        <label for="mobile_phone">Nomor Telepon</label>
+                        <label style="color: #838383;" for="mobile_phone">Nomor Telepon</label>
                       </td>
                       <td>
                         <div class="form-group">
@@ -68,29 +68,29 @@
                     </tr>
                     <tr>
                       <td>
-                        <label>Jenis Kelamin</label>
+                        <label style="color: #838383;">Jenis Kelamin</label>
                       </td>
                       <td>
                         <div class="form-group">
                           <% if (!context.userBio) { %>
-                          <div class="form-check custom-radio form-check-inline">
+                          <div class="form-check form-check-inline">
                             <input type="radio" id="gender_male" name="gender" value="Laki-laki" class="form-check-input">
-                            <label for="gender_male" class="form-check-label">Pria</label>
+                            <label style="color: #838383;" for="gender_male" class="form-check-label">Pria</label>
                           </div>
-                          <div class="form-check custom-radio form-check-inline">
+                          <div class="form-check form-check-inline">
                             <input type="radio" id="gender_female" name="gender" value="Wanita" class="form-check-input">
-                            <label for="gender_female" class="form-check-label">Wanita</label>
+                            <label style="color: #838383;" for="gender_female" class="form-check-label">Wanita</label>
                           </div>
                           <% } else { %>
-                          <div class="form-check custom-radio form-check-inline">
+                          <div class="form-check form-check-inline">
                             <input type="radio" id="gender_male" name="gender" value="Laki-laki" class="form-check-input"
                               <%=context.userBio.gender === 'Laki-laki' ? 'checked' : '' %>>
-                            <label for="gender_male" class="form-check-label">Pria</label>
+                            <label style="color: #838383;" for="gender_male" class="form-check-label">Pria</label>
                           </div>
-                          <div class="form-check custom-radio form-check-inline">
+                          <div class="form-check form-check-inline">
                             <input type="radio" id="gender_female" name="gender" value="Wanita" class="form-check-input"
                               <%=context.userBio.gender === 'Wanita' ? 'checked' : '' %>>
-                            <label for="gender_female" class="form-check-label">Wanita</label>
+                            <label style="color: #838383;" for="gender_female" class="form-check-label">Wanita</label>
                           </div>
                           <% } %>
                         </div>
@@ -98,7 +98,7 @@
                     </tr>
                     <tr>
                       <td>
-                        <label for="birthday">Tanggal Lahir</label>
+                        <label style="color: #838383;" for="birthday">Tanggal Lahir</label>
                       </td>
                       <td>
                         <div class="form-group">
@@ -113,7 +113,7 @@
                     </tr>
                     <tr>
                       <td>
-                        <label></label>
+                        <label style="color: #838383;"></label>
                       </td>
                       <td>
                         <div>
@@ -136,7 +136,7 @@
               <div class="container-fluid">
                 <form action="/user/account/profile/foto" method="POST" enctype="multipart/form-data">
                   <div class="container-fluid p-3 d-flex align-items-center justify-content-center">
-                    <label for="foto" style="cursor: pointer;">
+                    <label for="foto" style="cursor: pointer; color: #838383;">
                       <% if (!context.userBio) { %>
                         <img class="shadow" id="profilePhotoPreview" style="width: 120px; height: 120px; border-radius: 50%; border: solid 1px #f23567;" src="/user-foto.png" alt="Profile Photo">
                       <% } else { %>

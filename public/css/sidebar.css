@@ -1,0 +1,23 @@
+.menu {
+  color: #838383; 
+  font-weight: 500;
+}
+
+.sub-menu {
+  color: #838383; 
+  font-weight: 400;
+}
+
+.menu:hover, .menu:active, .sub-menu:hover {
+  color: #f23567;
+}
+
+.icon {
+  color: #f23567;
+  font-size: 23px;
+}
+
+.menu-group {
+  background-color: #F5F5F5; 
+  border: none;
+}
