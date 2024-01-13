@@ -1,0 +1,89 @@
+<div class="container-fluid">
+  <div class="row row-cols-1 row-cols-md-2">
+    <div class="col-md-3 mb-3 mt-3">
+      <%- include('../layouts/sidebar') %>
+      <!-- include sidebar from views/layouts/ -->
+    </div>
+    <div class="col-md-9 mb-3 mt-3">
+      <div class="card shadow-sm mr-5">
+        <div class="card-header pb-0">
+          <div class="container-fluid">
+            <h4>Tambah Alamat</h4>
+            <p>Pastikan Anda Menambahkan Alamat Yang Benar</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <form action="/user/account/address" method="POST">
+            <table class="table table-borderless">
+              <tr>
+                <td class="text-right col-2">
+                  <label style="color: #838383;"for="province">Provinsi</label>
+                </td>
+                <td class="col-10">
+                  <div class="form-group">
+                    <input class="form-control w-100" type="text" id="province" name="province" placeholder="Province">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-right">
+                  <label style="color: #838383;" for="regency">Kabupaten/Kota</label>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input class="form-control w-100" type="text" id="regency" name="regency"placeholder="Regency">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-right">
+                  <label style="color: #838383;"for="subdistrict">Kecamatan</label>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input class="form-control w-100" type="text" id="subdistrict" name="subdistrict" placeholder="Subdistrict">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-right">
+                  <label style="color: #838383;" for="postalCode">Kode Pos</label>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input class="form-control w-100" type="number" id="postalCode" name="postalCode" placeholder="Postal Code">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-right" > 
+                  <label style="color: #838383;" for="addressDetail">Detail Alamat</label>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <textarea class="form-control w-100" type id="addressDetail" name="addressDetail" placeholder="Address Detail"></textarea>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label style="color: #838383;"></label>
+                </td>
+                <td>
+                  <div>
+                    <button class="btn btn-info pb-2" type="submit"
+                      style="background-color: #f23567; border: #f23567;"
+                      onMouseOver="this.style.outline='solid 1px #f23567'; this.style.background='#f5497b'; this.style.transform= 'scale(1.1)'; this.style.transition='transform 0.3s ease'"
+                      onMouseOut="this.style.outline='none'; this.style.transform= 'none'; this.style.background='#f23567';">
+                      Simpan
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

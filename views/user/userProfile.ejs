@@ -14,121 +14,119 @@
         <div class="row row-cols-1 row-cols-md-2">
           <div class="col-lg-9 mb-3">
             <div class="card-body" style="box-shadow: 5px 0 5px -5px rgba(163, 163, 163, 0.5);">
-              <div>
-                <form action="/user/account/profile" method="POST">
-                  <table class="table table-borderless">
-                    <tr>
-                      <td>
-                        <label style="color: #838383;" for="username">Username</label>
-                      </td>
-                      <td>
-                        <div class="form-group">
-                          <input type="text" id="username" name="username" class="form-control w-100"
-                            placeholder="Username" value="<%= context.session.username %>">
+              <form action="/user/account/profile" method="POST">
+                <table class="table table-borderless">
+                  <tr> 
+                    <td class="col-3 text-right">
+                      <label style="color: #838383;" for="username">Username</label>
+                    </td>
+                    <td class="col-9">
+                      <div class="form-group">
+                        <input type="text" id="username" name="username" class="form-control w-100"
+                          placeholder="Username" value="<%= context.session.username %>">
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-right">
+                      <label style="color: #838383;" for="name">Nama</label>
+                    </td>
+                    <td>
+                      <div class="form-group">
+                        <% if (!context.userBio) { %>
+                        <input type="text" id="name" name="name" class="form-control w-100"
+                          placeholder="Your Name" value>
+                        <% } else { %>
+                        <input type="text" id="name" name="name" class="form-control w-100"
+                          value="<%= context.userBio.name %>">
+                        <% } %>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-right">
+                      <label style="color: #838383;" for="email">E-mail</label>
+                    </td>
+                    <td>
+                      <div class="form-group">
+                        <input type="email" id="email" name="email" readonly class="form-control w-100"
+                          value="<%= context.session.email %>">
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-right">
+                      <label style="color: #838383;" for="mobile_phone">Nomor Telepon</label>
+                    </td>
+                    <td>
+                      <div class="form-group">
+                        <input type="tel" id="mobile_phone" name="mobile_phone" class="form-control w-100"
+                          placeholder="Phone Number" value="<%= context.session.mobile_phone %>">
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-right">
+                      <label style="color: #838383;">Jenis Kelamin</label>
+                    </td>
+                    <td>
+                      <div class="form-group">
+                        <% if (!context.userBio) { %>
+                        <div class="form-check form-check-inline">
+                          <input type="radio" id="gender_male" name="gender" value="Laki-laki" class="form-check-input">
+                          <label style="color: #838383;" for="gender_male" class="form-check-label">Pria</label>
                         </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <label style="color: #838383;" for="name">Nama</label>
-                      </td>
-                      <td>
-                        <div class="form-group">
-                          <% if (!context.userBio) { %>
-                          <input type="text" id="name" name="name" class="form-control w-100"
-                            placeholder="Your Name" value>
-                          <% } else { %>
-                          <input type="text" id="name" name="name" class="form-control w-100"
-                            value="<%= context.userBio.name %>">
-                          <% } %>
+                        <div class="form-check form-check-inline">
+                          <input type="radio" id="gender_female" name="gender" value="Wanita" class="form-check-input">
+                          <label style="color: #838383;" for="gender_female" class="form-check-label">Wanita</label>
                         </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <label style="color: #838383;" for="email">E-mail</label>
-                      </td>
-                      <td>
-                        <div class="form-group">
-                          <input type="email" id="email" name="email" readonly class="form-control w-100"
-                            value="<%= context.session.email %>">
+                        <% } else { %>
+                        <div class="form-check form-check-inline">
+                          <input type="radio" id="gender_male" name="gender" value="Laki-laki" class="form-check-input"
+                            <%=context.userBio.gender === 'Laki-laki' ? 'checked' : '' %>>
+                          <label style="color: #838383;" for="gender_male" class="form-check-label">Pria</label>
                         </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <label style="color: #838383;" for="mobile_phone">Nomor Telepon</label>
-                      </td>
-                      <td>
-                        <div class="form-group">
-                          <input type="tel" id="mobile_phone" name="mobile_phone" class="form-control w-100"
-                            placeholder="Phone Number" value="<%= context.session.mobile_phone %>">
+                        <div class="form-check form-check-inline">
+                          <input type="radio" id="gender_female" name="gender" value="Wanita" class="form-check-input"
+                            <%=context.userBio.gender === 'Wanita' ? 'checked' : '' %>>
+                          <label style="color: #838383;" for="gender_female" class="form-check-label">Wanita</label>
                         </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <label style="color: #838383;">Jenis Kelamin</label>
-                      </td>
-                      <td>
-                        <div class="form-group">
-                          <% if (!context.userBio) { %>
-                          <div class="form-check form-check-inline">
-                            <input type="radio" id="gender_male" name="gender" value="Laki-laki" class="form-check-input">
-                            <label style="color: #838383;" for="gender_male" class="form-check-label">Pria</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input type="radio" id="gender_female" name="gender" value="Wanita" class="form-check-input">
-                            <label style="color: #838383;" for="gender_female" class="form-check-label">Wanita</label>
-                          </div>
-                          <% } else { %>
-                          <div class="form-check form-check-inline">
-                            <input type="radio" id="gender_male" name="gender" value="Laki-laki" class="form-check-input"
-                              <%=context.userBio.gender === 'Laki-laki' ? 'checked' : '' %>>
-                            <label style="color: #838383;" for="gender_male" class="form-check-label">Pria</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input type="radio" id="gender_female" name="gender" value="Wanita" class="form-check-input"
-                              <%=context.userBio.gender === 'Wanita' ? 'checked' : '' %>>
-                            <label style="color: #838383;" for="gender_female" class="form-check-label">Wanita</label>
-                          </div>
-                          <% } %>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <label style="color: #838383;" for="birthday">Tanggal Lahir</label>
-                      </td>
-                      <td>
-                        <div class="form-group">
-                          <% if (!context.userBio) { %>
-                          <input type="date" id="birthday" name="birthday" class="form-control w-100" value>
-                          <% } else { %>
-                          <input type="date" id="birthday" name="birthday" class="form-control w-100"
-                            value="<%= context.userBio.birthday ? context.userBio.birthday.toLocaleDateString('en-CA') : '' %>">
-                          <% } %>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <label style="color: #838383;"></label>
-                      </td>
-                      <td>
-                        <div>
-                          <button class="btn btn-info pb-2" type="submit"
-                          style="background-color: #f23567; border: #f23567;"
-                          onMouseOver="this.style.outline='solid 1px #f23567'; this.style.background='#f5497b'; this.style.transform= 'scale(1.1)'; this.style.transition='transform 0.3s ease'"
-                          onMouseOut="this.style.outline='none'; this.style.transform= 'none'; this.style.background='#f23567';">
-                            Simpan
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
-                </form>
-              </div>
+                        <% } %>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-right">
+                      <label style="color: #838383;" for="birthday">Tanggal Lahir</label>
+                    </td>
+                    <td>
+                      <div class="form-group">
+                        <% if (!context.userBio) { %>
+                        <input type="date" id="birthday" name="birthday" class="form-control w-100" value>
+                        <% } else { %>
+                        <input type="date" id="birthday" name="birthday" class="form-control w-100"
+                          value="<%= context.userBio.birthday ? context.userBio.birthday.toLocaleDateString('en-CA') : '' %>">
+                        <% } %>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-right">
+                      <label style="color: #838383;"></label>
+                    </td>
+                    <td>
+                      <div>
+                        <button class="btn btn-info pb-2" type="submit"
+                        style="background-color: #f23567; border: #f23567;"
+                        onMouseOver="this.style.outline='solid 1px #f23567'; this.style.background='#f5497b'; this.style.transform= 'scale(1.1)'; this.style.transition='transform 0.3s ease'"
+                        onMouseOut="this.style.outline='none'; this.style.transform= 'none'; this.style.background='#f23567';">
+                          Simpan
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </form>
             </div>
           </div>
           <div class="col-lg-3 mb-3">
