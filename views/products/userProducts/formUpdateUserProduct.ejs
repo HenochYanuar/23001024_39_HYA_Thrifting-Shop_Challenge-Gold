@@ -1,0 +1,100 @@
+<div class="container-fluid">
+  <div class="row row-cols-1 row-cols-md-2">
+    <div class="col-md-3 mb-3 mt-3">
+      <%- include('../../layouts/sidebarLayout') %> <!-- include sidebar from views/layouts/ -->
+    </div>
+    <div class="col-md-9 mb-3 mt-3">
+      <div class="card shadow-sm mr-5">
+        <div class="card-header pb-0">
+          <div class="container-fluid">
+            <h4>Tambah Jualan</h4>
+            <p>Jual Barang Bekas Anda Atau Apapun Yang Ingin Anda Jual</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <form action="/user/account/userProducts/update?_method=PUT" method="POST" enctype="multipart/form-data">
+            <table class="table table-borderless">
+              <input type="text" id="id" name="id" hidden value="<%= context.product.id %>">
+              <tr>
+                <td class="text-right col-2">
+                  <label style="color: #838383;"for="item_name">Nama Barang</label>
+                </td>
+                <td class="col-10">
+                  <div class="form-group">
+                    <input class="form-control w-100" type="text" id="item_name" name="item_name" placeholder="Item Name" value="<%= context.product.item_name %>">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-right">
+                  <label style="color: #838383;" for="itemCategory">Kategori Barang</label>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input class="form-control w-100" type="text" id="itemCategory" name="itemCategory" placeholder="Item Category" value="<%= context.product.itemCategory %>">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-right">
+                  <label style="color: #838383;"for="brand">Merek</label>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input class="form-control w-100" type="text" id="brand" name="brand" placeholder="Brand" value="<%= context.product.brand %>">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-right">
+                  <label style="color: #838383;" for="price">Harga</label>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input class="form-control w-100" type="number" id="price" name="price" placeholder="Price" value="<%= context.product.price %>">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-right" > 
+                  <label style="color: #838383;" for="description">Deskripsi</label>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <textarea class="form-control w-100" id="description" id="description" name="description" placeholder="Description"><%= context.product.description %></textarea>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-right" > 
+                  <label style="color: #838383;" for="foto">Gambar</label>
+                </td>
+                <td>
+                  <img class="shadow-sm mb-2" style="width: 120px; height: 120px; border-radius: 10%; border: solid 1px #f23567;" src="/img/products/<%= context.product.foto %>" alt="Profile Photo">
+                  <div class="form-group">
+                    <input class="form-control w-100" type="file" id="foto" name="foto" accept="image/*" placeholder="Item Photo">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label style="color: #838383;"></label>
+                </td>
+                <td>
+                  <div>
+                    <button class="btn btn-info pb-2" type="submit"
+                      style="background-color: #f23567; border: #f23567;"
+                      onMouseOver="this.style.outline='solid 1px #f23567'; this.style.background='#f5497b'; this.style.transform= 'scale(1.1)'; this.style.transition='transform 0.3s ease'"
+                      onMouseOut="this.style.outline='none'; this.style.transform= 'none'; this.style.background='#f23567';">
+                      Simpan
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
