@@ -21,6 +21,9 @@ server.use(express.static(path.join(__dirname, 'public')))
 
 server.use(methodOverride('_method'))
 
+// middleware untuk memparsing payload json
+server.use(express.json())
+
 server.use(session({
   secret: 'secret-key',
   resave: false,
@@ -29,9 +32,6 @@ server.use(session({
     maxAge: 7200000,
   },
 }))
-
-// middleware untuk memparsing payload json
-server.use(express.json())
 
 server.use('/user/register', registerRouter)
 server.use('/user/login', loginRouter)
@@ -44,5 +44,8 @@ server.use('/user/account', addressRouter)
 server.use('/user/account', userProductsRouter)
 server.use('/', orderRouter)
 
+server.use((req, res, next) => {
+  res.status(404).render('error/error', { message: '404 | Page Not Found', title: 'error', layout: 'error/error' })
+})
 
 server.listen(port, () => console.log(`Server is running at http://localhost:${port}`))
