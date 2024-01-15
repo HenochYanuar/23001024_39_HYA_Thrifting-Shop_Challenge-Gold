@@ -4,35 +4,47 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %></title>
+  <link rel="icon" href="/logo-foto.png" type="image/x-icon">
   <link rel="stylesheet" href="/css/bootstrap.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Dancing+Script&family=Graduate&family=Stardos+Stencil&display=swap">
   <link rel="stylesheet" href="/css/baseLayout.css">
+  <link rel="stylesheet" href="/css/sidebar.css">
 </head>
 <body>
   <header>
     <div class="logo">Thrifting Shop</div>
-    <form action>
+    <form action="/" method="GET">
       <div class="search-container">
-        <input type="text" id="search-input" placeholder="Search...">
-        <button class="search-button"><i class="fa fa-search fa-2x"></i></button>
+        <input type="search" id="search-input" name="search" placeholder="Search...">
+        <button type="submit" class="search-button"><i class="fa fa-search fa-2x"></i></button>
       </div>
     </form>
     <nav>
       <ul>
         <div class="cart-container">
-          <li><a href="#" class="cart"><i class="fa fa-cart-plus fa-2x"></i></a></li>
+          <li><a href="/user/account/userProducts?type=purchased" class="cart"><i class="fa fa-cart-plus fa-2x"></i></a></li>
         </div>
       </ul>
     </nav>
     <div class="image_profile">
-      <a href="">
-        <img src="/img/users/fotoUser-1703856340277.jpg" alt="Fotoku">
+      <a href="/user/account/profile">
+        <% if (context.session && context.userBio) { %>
+          <% if (!context.userBio.foto) { %>
+            <img src="/user-foto.png" alt="Profile Photo">
+          <% } else { %>
+            <img src="/img/users/<%= context.userBio.foto %>" alt="Profile Photo">
+          <% } %>
+        <% } else { %>
+            <img src="/user-foto.png" alt="Profile Photo">
+        <% } %>
       </a>
     </div>
   </header>
 
-  <%- body %>
+  <main style="background-color: #F5F5F5; padding: 10px;">
+    <%- body %>
+  </main>
 
   <footer>
     <div class="footer-container">
@@ -43,20 +55,20 @@
         </div>
       <div class="footer-artikel">
         <h2>Akses Cepat</h2>
-        <p><a href="">Login</a></p>
-        <p><a href="">Register</a></p>
+        <p><a href="/user/login">Login</a></p>
+        <p><a href="/user/register">Register</a></p>
       </div>
       <div class="footer-social">
         <h2>Social Media</h2>
         <div class="social-icons">
-          <a href="#"><i class="fa fa-facebook"></i></a>
-          <a href="#"><i class="fa fa-twitter"></i></a>
-          <a href="#"><i class="fa fa-instagram"></i></a>
+          <a href="https://web.facebook.com/henoch.yanuar/"><i class="fa fa-facebook"></i></a>
+          <a href="https://twitter.com/henoch_yanuar"><i class="fa fa-twitter"></i></a>
+          <a href="https://www.instagram.com/henoch_yanuar/"><i class="fa fa-instagram"></i></a>
         </div>
       </div>
     </div>
     <div class="footer-copyright">
-      <p>Copyright © 2024, Henoch Yanuar Ari Swasono</p>
+      <p>Copyright © 2024, Binar FSW 23001024 39 HYAS Thrifting Shop Challenge Gold</p>
     </div>
   </footer>
 </body>
