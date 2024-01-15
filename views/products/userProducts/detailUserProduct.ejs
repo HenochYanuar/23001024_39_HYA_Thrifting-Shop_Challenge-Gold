@@ -1,0 +1,70 @@
+<div class="container-fluid">
+  <div class="row row-cols-1 row-cols-md-2">
+    <div class="col-md-3 mb-3 mt-3">
+      <%- include('../../layouts/sidebarLayout') %> <!-- include sidebar from views/layouts/ -->
+    </div>
+    <div class="col-md-9 mb-3 mt-3">
+      <div class="container-fluid">
+        <div class="card shadow mr-5 ml-5 mb-3 mt-3" style="background-color: #F8F9FA;">
+          <div class="card-body">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
+              <div class="col-lg-6 mb-3 d-flex">
+                <div class="container-fluid m-3">
+                  <img class="img-fluid m-1" style="width: 100%; max-width: 500px; outline: solid 1px #f23567; border-radius: 5%;" src="/img/products/<%= context.product.foto %>" alt="Foto Produk">
+                </div>
+              </div>
+              <div class="col-lg-6 mb-3 d-flex">
+                <div class="container-fluid m-3 shadow-sm">
+                  <div class="container mb-4 mt-3">
+                    <h4><%= context.product.item_name %> | <%= context.product.itemCategory %> | <%= context.product.brand %></h4>
+                  </div>
+                  <hr>
+                  <div class="container-fluid p-2 mb-2" style="background-color: #f6f6f6;">
+                    <h2 style="color: #f23567;" class="pl-3">Rp <%= context.product.price %></h2>
+                  </div>
+                  
+                  <div class="container-fluid p-2">
+                    <table class="table table-borderless">
+                      <tr>
+                        <th>Description : </th>
+                      </tr>
+                      <tr>
+                        <td style="padding: 0 20px;"><%= context.product.description %></td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="container-fluid p-2">
+                    <% if (context.product.isSold === true) { %>
+                      <% if (context.sellerBio.id === context.userBio.userID) { %>
+                        <table class="table table-borderless">
+                          <tr>
+                            <th>Pembeli : </th>
+                          </tr>
+                          <tr>
+                            <td style="padding: 0 20px; color: #f23567;">@<%= context.buyerBio.username %></td>
+                          </tr>
+                        </table>
+                        <div class="container-fluid p-2 mb-4 ml-0 mr-6 text-right">
+                          <p class="btn btn-outline-danger pl-5 pr-5 pt-2 pb-2">Sudah Terjual</p>
+                        </div>
+                      <% } else {%>
+                        <table class="table table-borderless">
+                          <tr>
+                            <th>Penjual : </th>
+                          </tr>
+                          <tr>
+                            <td style="padding: 0 20px; color: #f23567;">@<%= context.sellerBio.username %></td>
+                          </tr>
+                        </table>
+                      <% } %>
+                    <% } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

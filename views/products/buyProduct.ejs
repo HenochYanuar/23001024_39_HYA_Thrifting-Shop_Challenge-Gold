@@ -1,16 +1,16 @@
 <div class="container-fluid">
-  <div class="card shadow mr-5 ml-5 mb-3 mt-3" style="background-color: #fff5f5; background: linear-gradient(to right, #fff5f5, #fcfcfc);">
+  <div class="card shadow mr-5 ml-5 mb-3 mt-3" style="background-color: #F8F9FA;">
     <div class="card-body">
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
         <div class="col-lg-6 mb-3 d-flex">
           <div class="container-fluid m-3">
-            <img class="img-fluid m-1" style="width: 100%;" src="/img/products/<%= context.product.foto %>" alt="Foto Produk">
+            <img class="img-fluid m-1" style="width: 100%; max-width: 500px; outline: solid 1px #f23567; border-radius: 5%;" src="/img/products/<%= context.product.foto %>" alt="Foto Produk">
           </div>
         </div>
         <div class="col-lg-6 mb-3 d-flex">
           <div class="container-fluid m-3 shadow-sm">
             <div class="container mb-4 mt-3">
-              <h2><%= context.product.item_name %> | <%= context.product.itemCategory %> | <%= context.product.brand %></h2>
+              <h3><%= context.product.item_name %> | <%= context.product.itemCategory %> | <%= context.product.brand %></h3>
             </div>
             <hr>
             <div class="container-fluid p-2 mb-2" style="background-color: #f6f6f6;">

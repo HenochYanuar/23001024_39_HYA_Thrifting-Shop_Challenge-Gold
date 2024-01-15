@@ -7,14 +7,13 @@
         <div class="col-lg-2 mb-3">
           <a href="/buyProduct/<%= product.id %>">
             <div class="card h-100"
-              style="background-color: #fff5f5;background: linear-gradient(to right, #fcfcfc, #fff5f5);"
               onMouseOver="this.style.outline='solid 1px #f23567'; this.style.transform= 'scale(1.1)'; this.style.transition='transform 0.3s ease'"
               onMouseOut="this.style.outline='none'; this.style.transform= 'none';">
               <div class="card-header p-1 h-40">
                 <img style="width: 100%; height: 200px;" class="img-fluid"
                   src="/img/products/<%= product.foto %>" alt>
               </div>
-              <div class="card-body d-flex flex-column pl-2 pt-1 pb-0">
+              <div class="card-body d-flex flex-column pl-2 pt-1 pb-0" style="background-color: #fbf8ff;">
                 <div style="display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; -webkit-line-clamp: 2;">
                   <p style="color: black;"><%= product.item_name %> | <%= product.itemCategory %> | <%= product.brand %></p>
                 </div>
