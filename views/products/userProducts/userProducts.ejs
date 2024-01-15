@@ -43,7 +43,7 @@
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
               <% if (context.products && context.products.length > 0) { %>
                 <% context.products.forEach((product) => { %>
-                  <div class="col-lg-3 mb-3">
+                  <div class="col-lg-3 mb-4">
                     <a href="/user/account/userProducts/detail/<%= product.id %>">
                       <div class="card h-100 mt-3"
                         onMouseOver="this.style.outline='solid 1px #f23567'; this.style.transform= 'scale(1.1)'; this.style.transition='transform 0.3s ease'"

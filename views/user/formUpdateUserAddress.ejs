@@ -15,14 +15,14 @@
         <div class="card-body">
           <form action="/user/account/address/update?_method=PUT" method="POST">
             <table class="table table-borderless">
-              <input type="text" id="id" name="id" value="<%= context.address.id %>" readonly hidden>
+              <input required type="text" id="id" name="id" value="<%= context.address.id %>" readonly hidden>
               <tr>
                 <td class="text-right col-2">
                   <label style="color: #838383;"for="province">Provinsi</label>
                 </td>
                 <td class="col-10">
                   <div class="form-group">
-                    <input class="form-control w-100" type="text" id="province" name="province" placeholder="Province" value="<%= context.address.province %>">
+                    <input required class="form-control w-100" type="text" id="province" name="province" placeholder="Province" value="<%= context.address.province %>">
                   </div>
                 </td>
               </tr>
@@ -32,7 +32,7 @@
                 </td>
                 <td>
                   <div class="form-group">
-                    <input class="form-control w-100" type="text" id="regency" name="regency"placeholder="Regency" value="<%= context.address.regency %>">
+                    <input required class="form-control w-100" type="text" id="regency" name="regency"placeholder="Regency" value="<%= context.address.regency %>">
                   </div>
                 </td>
               </tr>
@@ -42,7 +42,7 @@
                 </td>
                 <td>
                   <div class="form-group">
-                    <input class="form-control w-100" type="text" id="subdistrict" name="subdistrict" placeholder="Subdistrict" value="<%= context.address.subdistrict %>">
+                    <input required class="form-control w-100" type="text" id="subdistrict" name="subdistrict" placeholder="Subdistrict" value="<%= context.address.subdistrict %>">
                   </div>
                 </td>
               </tr>
@@ -52,7 +52,7 @@
                 </td>
                 <td>
                   <div class="form-group">
-                    <input class="form-control w-100" type="number" id="postalCode" name="postalCode" placeholder="Postal Code" value="<%= context.address.postalCode %>">
+                    <input required class="form-control w-100" type="number" id="postalCode" name="postalCode" placeholder="Postal Code" value="<%= context.address.postalCode %>">
                   </div>
                 </td>
               </tr>
@@ -62,7 +62,7 @@
                 </td>
                 <td>
                   <div class="form-group">
-                    <textarea class="form-control w-100" type id="addressDetail" name="addressDetail" placeholder="Address Detail"><%= context.address.addressDetail %></textarea>
+                    <textarea required class="form-control w-100" type id="addressDetail" name="addressDetail" placeholder="Address Detail"><%= context.address.addressDetail %></textarea>
                   </div>
                 </td>
               </tr>

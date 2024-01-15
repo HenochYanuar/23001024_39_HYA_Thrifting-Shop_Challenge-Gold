@@ -14,14 +14,14 @@
         <div class="card-body">
           <form action="/user/account/userProducts/update?_method=PUT" method="POST" enctype="multipart/form-data">
             <table class="table table-borderless">
-              <input type="text" id="id" name="id" hidden value="<%= context.product.id %>">
+              <input required type="text" id="id" name="id" hidden value="<%= context.product.id %>">
               <tr>
                 <td class="text-right col-2">
                   <label style="color: #838383;"for="item_name">Nama Barang</label>
                 </td>
                 <td class="col-10">
                   <div class="form-group">
-                    <input class="form-control w-100" type="text" id="item_name" name="item_name" placeholder="Item Name" value="<%= context.product.item_name %>">
+                    <input required class="form-control w-100" type="text" id="item_name" name="item_name" placeholder="Item Name" value="<%= context.product.item_name %>">
                   </div>
                 </td>
               </tr>
@@ -31,7 +31,7 @@
                 </td>
                 <td>
                   <div class="form-group">
-                    <input class="form-control w-100" type="text" id="itemCategory" name="itemCategory" placeholder="Item Category" value="<%= context.product.itemCategory %>">
+                    <input required class="form-control w-100" type="text" id="itemCategory" name="itemCategory" placeholder="Item Category" value="<%= context.product.itemCategory %>">
                   </div>
                 </td>
               </tr>
@@ -41,7 +41,7 @@
                 </td>
                 <td>
                   <div class="form-group">
-                    <input class="form-control w-100" type="text" id="brand" name="brand" placeholder="Brand" value="<%= context.product.brand %>">
+                    <input required class="form-control w-100" type="text" id="brand" name="brand" placeholder="Brand" value="<%= context.product.brand %>">
                   </div>
                 </td>
               </tr>
@@ -51,7 +51,7 @@
                 </td>
                 <td>
                   <div class="form-group">
-                    <input class="form-control w-100" type="number" id="price" name="price" placeholder="Price" value="<%= context.product.price %>">
+                    <input required class="form-control w-100" type="number" id="price" name="price" placeholder="Price" value="<%= context.product.price %>">
                   </div>
                 </td>
               </tr>
@@ -61,7 +61,7 @@
                 </td>
                 <td>
                   <div class="form-group">
-                    <textarea class="form-control w-100" id="description" id="description" name="description" placeholder="Description"><%= context.product.description %></textarea>
+                    <textarea required class="form-control w-100" id="description" id="description" name="description" placeholder="Description"><%= context.product.description %></textarea>
                   </div>
                 </td>
               </tr>
@@ -72,7 +72,7 @@
                 <td>
                   <img class="shadow-sm mb-2" style="width: 120px; height: 120px; border-radius: 10%; border: solid 1px #f23567;" src="/img/products/<%= context.product.foto %>" alt="Profile Photo">
                   <div class="form-group">
-                    <input class="form-control w-100" type="file" id="foto" name="foto" accept="image/*" placeholder="Item Photo">
+                    <input required class="form-control w-100" type="file" id="foto" name="foto" accept="image/*" placeholder="Item Photo">
                   </div>
                 </td>
               </tr>
