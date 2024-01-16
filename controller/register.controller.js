@@ -3,6 +3,11 @@ const bcrypt = require('bcrypt')
 const idCreator = require('../utils/idCreator')
 const MailRegister = require('../middleware/mailRegister')
 
+const err500 = {
+  message : '500 | Internal Server Error',
+  layout : 'error/error'
+}
+
 const registerUser = (req, res) => {
   res.status(200).render('login&Register/register', { message: '' })
 
@@ -19,7 +24,7 @@ const postRegisterUser = async (req, res) => {
     } else if (!email) {
       res.render('login&Register/register', { message: 'Email is required' })
 
-    } else if (!email) {
+    } else if (!password) {
       res.render('login&Register/register', { message: 'Password is required' })
 
     } else {
@@ -52,7 +57,7 @@ const postRegisterUser = async (req, res) => {
     }
   } catch (error) {
     console.error('Error in postRegisterUser:', error);
-    res.status(500).render('login&Register/register', { error: 'Internal Server Error' })
+    res.status(500).render('error/error', err500)
   }
 }
 
@@ -73,7 +78,7 @@ const registerVerify = async (req, res) => {
     }
   } catch (error) {
     console.error('Error in postRegisterUser:', error)
-    res.status(500).render('login&Register/register', { error: 'Internal Server Error' })
+    res.status(500).render('error/error', err500)
   }
 
 }
@@ -118,10 +123,21 @@ const postLogin = async (req, res) => {
 
   } catch (error) {
     console.error('Error in postRegisterUser:', error)
-    res.status(500).render('login&Register/register', { error: 'Internal Server Error' })
+    res.status(500).render('error/error', err500)
   }
 }
 
+const logout = (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Error destroying session:', err)
+      return res.status(500).render('error/error', { message: '500 | Internal Server Error'})
+    }
+
+    res.redirect('/')
+  })
+}
+
 module.exports = {
-  registerUser, postRegisterUser, registerVerify, login, postLogin
+  registerUser, postRegisterUser, registerVerify, login, postLogin, logout
 }

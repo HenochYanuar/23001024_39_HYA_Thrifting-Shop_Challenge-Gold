@@ -1,85 +1,101 @@
 const productModel = require('../models/product.model')
 const userModel = require('../models/user.model')
+const userBioModel = require('../models/userBio.model')
+const userAddressModel = require('../models/userAddress.model')
+const orderModel = require('../models/order.model')
 const saveImgMiddleware = require('../middleware/saveImgMiddleware')
 const idCreator = require('../utils/idCreator')
 
+
+const layout = 'layouts/baseLayout'
+
+const err404 = {
+  message : '404 | Item Not Found',
+  layout : 'error/error'
+}
+
+const err500 = {
+  message : '500 | Internal Server Error',
+  layout : 'error/error'
+}
+
 const getAllProducts = async (req, res) => {
-  const searchQuery = req.query.search
+  let searchQuery = req.body
+  searchQuery = req.query.search
+  const session = req.session.email
 
-  let allProducts
+  const allProducts = searchQuery ? await productModel.getAllByQuery(searchQuery) : await productModel.getAll()
 
-  if (searchQuery) {
-    allProducts = await productModel.getAllByQuery(searchQuery)
-  } else {
-    allProducts = await productModel.getAll()
+  const products = allProducts.map(product => productModel.getProductObject(product))
+  const context = { 
+    products, session 
   }
 
-  const products = allProducts.map((product) => productModel.getProductObject(product));
-
-  const context = {
-    products
+  if (session) {
+    let user = await userModel.findByEmail(session)
+    context.userBio = await userBioModel.findByUserId(user.id)
   }
 
-  return res.status(200).render('products/dashboardProducts', { context })
+  const title = 'Thrifting Shop | Situs Belanja Barang Muarh & Bekas'
+
+  res.status(200).render('products/dashboardProducts', { context, title, layout })
 }
 
 const getUserProducts = async (req, res) => {
   try {
-    const user = await userModel.findByEmail(req.session.email)
-    let userProducts = await productModel.getUserProducts(user.id)
+    const session = await userModel.findByEmail(req.session.email)
+    const userBio = await userBioModel.findByUserId(session.id)
 
-    let products = userProducts.map((product) => productModel.getProductObject(product))
+    const userId = session.id
+    const queryType = req.query.type || "all"
+
+    let userProducts;
+
+    switch (queryType) {
+      case "forSale":
+        userProducts = await productModel.getForSaleProducts(userId);
+        break
+      case "sold":
+        userProducts = await productModel.getSoldProducts(userId);
+        break
+      case "purchased":
+        userProducts = await productModel.getPurchasedProducts(userId);
+        break
+      case "all":
+        userProducts = await productModel.getUserProducts(userId);
+        break;
+      default:
+        return res.status(400).redirect('/user/account/userProducts?type=all')
+    }
+
+    const products = userProducts.map((product) => productModel.getProductObject(product))
 
     const context = {
-      products,
-      query: "all"
+      products, session, userBio,
+      query: queryType
     }
 
-    const query = req.query.type
+    const title = 'Thrifting Shop | Jual Barang Anda Sesuai Dengan Keinginan Anda'
 
-    if (query === "forSale") {
-      userProducts = await productModel.getForSaleProducts(user.id)
-      products = userProducts.map((product) => productModel.getProductObject(product))
-      const context = {
-        products,
-        query: "forSale"
-      }
-      return res.status(200).render('products/userProducts/userProducts', { context })
-
-    } else if (query === "sold") {
-      userProducts = await productModel.getSoldProducts(user.id)
-      products = userProducts.map((product) => productModel.getProductObject(product))
-      const context = {
-        products,
-        query: "sold"
-      }
-      return res.status(200).render('products/userProducts/userProducts', { context })
-
-    } else if (query === "purchased") {
-      userProducts = await productModel.getPurchasedProducts(user.id)
-      products = userProducts.map((product) => productModel.getProductObject(product))
-      const context = {
-        products,
-        query: "purchased"
-      }
-      return res.status(200).render('products/userProducts/userProducts', { context })
-
-    } else if (query === "all") {
-      return res.status(200).render('products/userProducts/userProducts', { context })
-
-    } else {
-      return res.status(200).redirect('/user/account/userProducts?type=all')
-    }
-
+    return res.status(200).render('products/userProducts/userProducts', { context, title, layout })
 
   } catch (error) {
     console.error('Error in getUserProduct:', error)
-    res.status(500).render('products/userProducts/userProducts', { error: 'Internal Server Error' })
+    res.status(500).render('error/error', err500)
   }
 }
 
 const addUserProduct = async (req, res) => {
-  return res.status(200).render('products/userProducts/formAddUserProduct')
+  const session = await userModel.findByEmail(req.session.email)
+  const userBio = await userBioModel.findByUserId(session.id)
+
+  const context = {
+    session, userBio
+  }
+
+  const title = 'Thrifting Shop | Tambahkan Jualan Anda, Barang Bekas Anda dll'
+
+  return res.status(200).render('products/userProducts/formAddUserProduct', { context, title, layout })
 }
 
 const postAddUserProduct = async (req, res) => {
@@ -101,37 +117,34 @@ const postAddUserProduct = async (req, res) => {
     return res.status(201).redirect('/user/account/userProducts')
   } catch (error) {
     console.error('Error in postAddUserProduct:', error)
-    res.status(500).render('products/userProducts/userProducts', { error: 'Internal Server Error' })
+    res.status(500).render('error/error', err500)
   }
 }
 
 const updateUserProduct = async (req, res) => {
   try {
     const id = await req.params.id
+    const session = await userModel.findByEmail(req.session.email)
+    const userBio = await userBioModel.findByUserId(session.id)
 
     const product = await productModel.getOne(id)
 
-    if (!product) {
-      res.status(400).redirect('/user/account/userProducts')
+    if (!product || product.isSold === true) {
+      res.status(404).render('error/error', err404)
       return
     }
 
     const context = {
-      id: product.id,
-      itemCategory: product.itemCategory,
-      item_name: product.item_name,
-      brand: product.brand,
-      price: product.price,
-      description: product.description,
-      foto: product.foto,
-      isSold: product.isSold
+      product, session, userBio
     }
 
-    return res.status(201).render('products/userProducts/formUpdateUserProduct', { context })
+    const title = 'Thrifting Shop | Perbarui Barang Jualan Anda Agar Lebih Sesuai'
+
+    return res.status(201).render('products/userProducts/formUpdateUserProduct', { context, title, layout })
 
   } catch (error) {
     console.error('Error in updateUserProduct:', error)
-    res.status(500).render('products/userProducts/userProducts', { error: 'Internal Server Error' })
+    res.status(500).render('error/error', err500)
   }
 }
 
@@ -141,9 +154,9 @@ const postUpdateUserProduct = async (req, res) => {
     const foto = req.file.filename
 
     if (!id) {
-      res.status(400).json({ message: 'pekok e, barang e sopo iki ra ono gob....' })
+      res.status(404).render('error/error', err404)
       return
-    }
+    } 
 
     await productModel.update(id, item_name, itemCategory, brand, price, description, foto)
 
@@ -151,7 +164,7 @@ const postUpdateUserProduct = async (req, res) => {
 
   } catch (error) {
     console.error('Error in postUpdateUserProduct:', error)
-    res.status(500).render('products/userProducts/userProducts', { error: 'Internal Server Error' })
+    res.status(500).render('error/error', err500)
   }
 }
 
@@ -161,8 +174,8 @@ const deleteUserProduct = async (req, res) => {
 
     const product = await productModel.getOne(id)
 
-    if (!product) {
-      res.status(400).redirect('/user/account/userProducts')
+    if (!product || product.isSold === true) {
+      res.status(404).render('error/error', err404)
       return
     }
 
@@ -171,36 +184,43 @@ const deleteUserProduct = async (req, res) => {
     return res.status(201).redirect('/user/account/userProducts')
   } catch (error) {
     console.error('Error in deleteUserProduct:', error)
-    res.status(500).render('products/userProducts/userProducts', { error: 'Internal Server Error' })
+    res.status(500).render('error/error', err500)
   }
 }
 
 const detailUserProduct = async (req, res) => {
   try {
     const id = await req.params.id
+    const session = await userModel.findByEmail(req.session.email)
+    const userBio = await userBioModel.findByUserId(session.id)
 
     const product = await productModel.getOne(id)
 
     if (!product) {
-      res.status(400).redirect('/user/account/userProducts')
+      res.status(404).render('error/error', err404)
       return
     }
-
+    
+    const sellerBio = await userModel.findById(product.userID)
+    const sellerAddress = await userAddressModel.getUserAddres(sellerBio.id)
+    const buyerData = await orderModel.getProductByGoodsId(product.id)
+    
+    const title = 'Thrifting Shop | Detail Barang Anda'
+    
     const context = {
-      id: product.id,
-      itemCategory: product.itemCategory,
-      item_name: product.item_name,
-      brand: product.brand,
-      price: product.price,
-      description: product.description,
-      foto: product.foto,
-      isSold: product.isSold
+      product, session, userBio, sellerBio, sellerAddress
     }
 
-    return res.status(201).render('products/userProducts/detailUserProduct', { context })
+    if (!buyerData) {
+      return res.status(201).render('products/userProducts/detailUserProduct', { context, title, layout })
+    } 
+
+    context.buyerBio = await userModel.findById(buyerData.userID)
+
+    return res.status(201).render('products/userProducts/detailUserProduct', { context, title, layout })
   } catch (error) {
     console.error('Error in detailUserProduct:', error)
-    res.status(500).render('products/userProducts/userProducts', { error: 'Internal Server Error' })
+    res.status(500).render('error/error', err500)
   }
 }
 

@@ -12,6 +12,14 @@ const buyProduct = async (data) => {
   }
 }
 
+const getProductByGoodsId = async (goodsID) => {
+  try {
+    return await db('orders').where({ goodsID }).first()
+  } catch (error) {
+    throw new Error('Error geting product by item id ')
+  }
+}
+
 module.exports = {
-  buyProduct,
+  buyProduct, getProductByGoodsId
 }

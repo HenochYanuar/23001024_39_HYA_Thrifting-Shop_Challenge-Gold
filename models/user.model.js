@@ -11,6 +11,14 @@ const findByEmail = async (email) => {
   }
 }
 
+const findById = async (id) => {
+  try {
+      return await db('users').where({ id }).first()
+  } catch (error) {
+      throw new Error('Error finding user by id')
+  }
+}
+
 const create = user => {
   return db('users').insert(user)
 }
@@ -32,5 +40,5 @@ const verify = async (email, isRegister) => {
 }
 
 module.exports = { 
-    create, findByEmail, verify, update
+    create, findByEmail, verify, update, findById
 }

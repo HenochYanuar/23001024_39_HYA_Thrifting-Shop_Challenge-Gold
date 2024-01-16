@@ -3,40 +3,39 @@ const userBioModel = require('../models/userBio.model')
 const saveImgMiddleware = require('../middleware/saveImgMiddleware')
 const idCreator = require('../utils/idCreator')
 
-const getUserProfile = async (req, res) => {
-  const user = await userModel.findByEmail(req.session.email)
-  const { id, username, mobile_phone, email } = user
 
-  const userBio = await userBioModel.findByUserId(id)
+const layout = 'layouts/baseLayout'
+const err404 = {
+  message : '404 | User Not Found',
+  layout : 'error/error'
+}
+
+const err500 = {
+  message : '500 | Internal Server Error',
+  layout : 'error/error'
+}
+
+const getUserProfile = async (req, res) => {
+  const session = await userModel.findByEmail(req.session.email)
+  const userBio = await userBioModel.findByUserId(session.id)
 
   let context = {
-    username, mobile_phone, email,
-    name: '', gendre: '', birthday: '', foto: ''
+    session, userBio
   }
 
-  if (!userBio) {
-    res.status(200).render('user/userProfile', { context })
-    return
-  }
+  const title = 'Thrifting Shop | Update Profile Anda dan Pastikan Data Anda Benar' 
 
-  const { name, gender, birthday, foto } = userBio
-
-    context = {
-      username, mobile_phone, email, name, gender, birthday, foto
-    }
-
-  res.status(200).render('user/userProfile', { context })
+  res.status(200).render('user/userProfile', { context, title, layout })
 }
 
 const postUserProfile = async (req, res) => {
-
   try {
     const { username, name, email, mobile_phone, gender, birthday } = req.body
 
     let user = await userModel.findByEmail(email)
 
     if (!user) {
-      res.status(400).render('user/userProfile', { message: `Failed to save user with email ${email}` })
+      res.status(400).render('error/error', err404)
     }
 
     await userModel.update(email, username, mobile_phone)
@@ -58,7 +57,7 @@ const postUserProfile = async (req, res) => {
 
   } catch (error) {
     console.error('Error in postRegisterUser:', error)
-    res.status(500).redirect('/user/account/profile')
+    res.status(500).render('error/error', err500)
   }
 
 }
@@ -66,11 +65,11 @@ const postUserProfile = async (req, res) => {
 const postFotoProfile = async (req, res) => {
   try {
     const foto = req.file.filename
-
+    
     const user = await userModel.findByEmail(req.session.email)
 
     if (!user) {
-      res.status(400).render('user/userProfile', { message: `Failed to save user with email ${email}` })
+      res.status(400).render('error/error', err404)
       return
     }
 
@@ -92,7 +91,7 @@ const postFotoProfile = async (req, res) => {
 
   } catch (error) {
     console.error('Error in postFotoProfile:', error)
-    res.status(500).redirect('/user/account/profile')
+    res.status(500).render('error/error', err500)
   }
 }
 

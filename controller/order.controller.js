@@ -1,15 +1,33 @@
 const userModel = require('../models/user.model')
+const userBioModel = require('../models/userBio.model')
+const userAddressModel = require('../models/userAddress.model')
 const productModel = require('../models/product.model')
-const orderModel = require('../models/order.mode')
+const orderModel = require('../models/order.model')
 const idCreator = require('../utils/idCreator')
+
+
+const layout = 'layouts/baseLayout'
+
+const err404 = {
+  message : '404 | Item Not Found',
+  layout : 'error/error'
+}
+
+const err500 = {
+  message : '500 | Internal Server Error',
+  layout : 'error/error'
+}
 
 const checkout = async (req, res) => {
   try {
-    const user = await userModel.findByEmail(req.session.email)
-    const userID = user.id
+    const session = await userModel.findByEmail(req.session.email)
+    const userID = session.id
     const id = await req.params.id
-    
+
+    const userBio = await userBioModel.findByUserId(userID)
     const product = await productModel.getOne(id)
+    const sellerBio = await userModel.findById(product.userID)
+    const sellerAddress = await userAddressModel.getUserAddres(sellerBio.id)
 
     if (!product) {
       res.status(400).redirect('/')
@@ -22,20 +40,15 @@ const checkout = async (req, res) => {
     }
 
     const context = {
-      id : product.id,
-      itemCategory : product.itemCategory,
-      item_name : product.item_name,
-      brand : product.brand,
-      price : product.price,
-      description: product.description,
-      foto : product.foto,
-      isSold : product.isSold
+      product, session, userBio, sellerBio, sellerAddress
     }
 
-    return res.status(201).render('products/buyProduct', { context })
+    const title = 'Thrifting Shop | Checkout Barang dan Pastikan Sesuai Dengan Harapan Anda '
+
+    return res.status(200).render('products/buyProduct', { context, title , layout })
   } catch (error) {
     console.error('Error in buyProduct:', error)
-    res.status(500).render('products/dashboardProducts', { error: 'Internal Server Error' })
+    res.status(500).render('products/dashboardProducts', err500)
   }
 }
 
@@ -47,7 +60,7 @@ const buyProduct = async (req, res) => {
     const product = await productModel.getOne(goodsID)
     
     if (!product) {
-      res.status(400).redirect('/')
+      res.status(404).render('error/error', err404)
       return
     }
 
@@ -58,7 +71,6 @@ const buyProduct = async (req, res) => {
 
     await orderModel.buyProduct({ id, userID, goodsID })
 
-    // const isSold = true
     await productModel.isSoldUpdate(goodsID)
 
     res.status(201).redirect('/user/account/userProducts?type=purchased')
