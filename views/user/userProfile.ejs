@@ -135,12 +135,12 @@
                 <form action="/user/account/profile/foto" method="POST" enctype="multipart/form-data">
                   <div class="container-fluid p-3 d-flex align-items-center justify-content-center">
                     <label for="foto" style="cursor: pointer; color: #838383;">
-                      <% if (!context.userBio) { %>
+                      <% if (!context.userBio || !context.userBio.foto) { %>
                         <img class="shadow" id="profilePhotoPreview" style="width: 120px; height: 120px; border-radius: 50%; border: solid 1px #f23567;" src="/user-foto.png" alt="Profile Photo">
                       <% } else { %>
                         <img class="shadow" id="profilePhotoPreview" style="width: 120px; height: 120px; border-radius: 50%; border: solid 1px #f23567;" src="/img/users/<%= context.userBio.foto %>" alt="Profile Photo">
                       <% } %>
-                      <input type="file" id="foto" name="foto" style="display: none;" accept="image/*">
+                      <input type="file" id="foto" name="foto" style="display: none;" accept="image/*" required>
                     </label>
                   </div>
                   <div class="container-fluid d-flex align-items-center justify-content-center">

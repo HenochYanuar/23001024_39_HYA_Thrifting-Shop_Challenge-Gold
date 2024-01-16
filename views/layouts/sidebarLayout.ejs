@@ -2,7 +2,7 @@
   <div class="card-header pt-3">
     <div class="container-fluid d-flex align-items-center justify-content-between">
       <div class="d-flex align-items-center">
-        <% if (!context.userBio) { %>
+        <% if (!context.userBio || !context.userBio.foto) { %>
           <img id="profilePhotoPreview" style="width: 60px; height: 60px; border-radius: 50%; border: solid 1px #f23567;" 
           src="/user-foto.png" alt="Profile Photo">
         <% } else { %>
@@ -10,8 +10,8 @@
           src="/img/users/<%= context.userBio.foto %>" alt="Profile Photo">
         <% } %>
         <div class="ml-3" style="color: #6a6a6a;">
-          <h5 style=" font-size: 20px;"><%= context.session.username %></h5>
-          <a href="/user/login/logout" style="color: #f23567;">Logout</a>
+          <h5 style=" font-size: 18px;"><%= context.session.username %></h5>
+          <a href="/user/login/logout" style="color: #f23567;"><i class="fa fa-sign-out"></i> Logout</a>
         </div>
       </div>
     </div>
