@@ -9,12 +9,15 @@ html {
 }
 
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #f23567;
   padding: 20px;
-  bottom: 0;
   width: 100%;
 }
 
@@ -24,6 +27,10 @@ header {
   color: #ffffff;
   font-weight: bold;
   margin: 0 20px;
+}
+
+.logo a:hover {
+  color: #F5F5F5;
 }
 
 .search-container {
@@ -105,10 +112,21 @@ nav ul .cart-container:hover {
   transition: transform 0.3s ease;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-top: 110px;
+}
+
+main {
+  flex-grow: 1;
+}
+
 footer {
   background-color: #f23567;
   color: #fff;
-  padding: 40px 0;
+  padding: 40px 30px;
   text-align: center;
   bottom: 0;
   width: 100%;
@@ -214,4 +232,23 @@ footer {
    .search-button .fa-2x{
     font-size: 1.2em;
    }
+   .footer-container {
+    display: inline-block;
+    margin: 0 30px;
+   }
+   .footer-info, .footer-artikel, .footer-social {
+    margin-bottom: 20px;
+   }
+}
+@media only screen and (max-width: 590px) {
+  .cart-container, .image_profile img, .logo  {
+    margin: 0;
+  }
+  .search-container {
+    width: 150px;
+  }
+  #search-input {
+    width: 70px;
+    padding: 8px 0;
+  }
 }
