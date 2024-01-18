@@ -83,7 +83,8 @@ const getProductObject = (product) => {
     price: product.price,
     description: product.description,
     foto: product.foto,
-    isSold: product.isSold
+    isSold: product.isSold,
+    userID: product.userID
   }
 }
 

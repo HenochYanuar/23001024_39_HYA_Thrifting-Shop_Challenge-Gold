@@ -25,7 +25,7 @@
                 <% context.sellerAddress.forEach((address) => { %>
                 <tr class="m-0">
                   <td></td>
-                  <td style="padding: 0 20px;"><ul><li><%= address.province %>, <%= address.regency %>, <%= address.subdistrict %></li></ul></td>
+                  <td style="padding: 0 20px;"><ul><li><%= address.province %>, <%= address.regency %>, <%= address.subdistrict %>, <%= address.addressDetail %></li></ul></td>
                 </tr>
                 <% }) %>
               </table>
@@ -51,15 +51,24 @@
               </table>
             </div>
             <div class="container-fluid p-2 mb-4 ml-0 mr-6 text-right">
-              <form action="/buyProduct/<%= context.product.id %>" method="POST">
-                <button class="btn btn-primary pl-5 pr-5 pt-2 pb-2" type="submit" 
-                onclick="return confirm('Apakah Anda yakin ingin membeli barang ini ?')"
+              <% if (context.userAddress.length <= 0) { %>
+                <a class="btn btn-primary pl-5 pr-5 pt-2 pb-2" href="/user/account/address/add"
                 style="background-color: #f23567; border: #f23567;"
                 onMouseOver="this.style.outline='solid 1px #f23567'; this.style.background='#f5497b'; this.style.transform= 'scale(1.1)'; this.style.transition='transform 0.3s ease'"
                 onMouseOut="this.style.outline='none'; this.style.transform= 'none'; this.style.background='#f23567';">
                   Beli
-                </button>
-              </form>
+                </a>
+              <% } else { %>
+                <form action="/buyProduct/<%= context.product.id %>" method="POST">
+                  <button class="btn btn-primary pl-5 pr-5 pt-2 pb-2" type="submit" 
+                  onclick="return confirm('Apakah Anda yakin ingin membeli barang ini ?')"
+                  style="background-color: #f23567; border: #f23567;"
+                  onMouseOver="this.style.outline='solid 1px #f23567'; this.style.background='#f5497b'; this.style.transform= 'scale(1.1)'; this.style.transition='transform 0.3s ease'"
+                  onMouseOut="this.style.outline='none'; this.style.transform= 'none'; this.style.background='#f23567';">
+                    Beli
+                  </button>
+                </form>
+              <% } %>
             </div>
           </div>
         </div>

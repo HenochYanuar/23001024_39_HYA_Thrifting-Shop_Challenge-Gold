@@ -69,9 +69,10 @@ const getUserProducts = async (req, res) => {
     }
 
     const products = userProducts.map((product) => productModel.getProductObject(product))
+    const userAddress = await userAddressModel.getUserAddres(userId)
 
     const context = {
-      products, session, userBio,
+      products, session, userBio, userAddress,
       query: queryType
     }
 

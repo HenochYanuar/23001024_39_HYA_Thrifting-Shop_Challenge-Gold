@@ -25,6 +25,7 @@ const checkout = async (req, res) => {
     const id = await req.params.id
 
     const userBio = await userBioModel.findByUserId(userID)
+    const userAddress = await userAddressModel.getUserAddres(userID)
     const product = await productModel.getOne(id)
     const sellerBio = await userModel.findById(product.userID)
     const sellerAddress = await userAddressModel.getUserAddres(sellerBio.id)
@@ -40,7 +41,7 @@ const checkout = async (req, res) => {
     }
 
     const context = {
-      product, session, userBio, sellerBio, sellerAddress
+      product, session, userBio, userAddress, sellerBio, sellerAddress
     }
 
     const title = 'Thrifting Shop | Checkout Barang dan Pastikan Sesuai Dengan Harapan Anda '
