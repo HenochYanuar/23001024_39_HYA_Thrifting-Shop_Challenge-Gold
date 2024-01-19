@@ -42,7 +42,7 @@ server.use('/', productRouter)
 server.use('/user/account', profileRouter)
 server.use('/user/account', addressRouter)
 server.use('/user/account', userProductsRouter)
-server.use('/', orderRouter)
+server.use('/checkout', orderRouter)
 
 server.use((req, res, next) => {
   res.status(404).render('error/error', { message: '404 | Page Not Found', title: 'error', layout: 'error/error' })

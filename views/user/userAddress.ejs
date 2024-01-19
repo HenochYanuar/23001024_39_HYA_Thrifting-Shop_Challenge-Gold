@@ -17,7 +17,7 @@
                   style="background-color: #f23567; border: #f23567;"
                   onMouseOver="this.style.outline='solid 1px #f23567'; this.style.background='#f5497b'; this.style.transform= 'scale(1.1)'; this.style.transition='transform 0.3s ease'"
                   onMouseOut="this.style.outline='none'; this.style.transform= 'none'; this.style.background='#f23567';"
-                  href="/user/account/address/add">
+                  href="/user/account/addresses/add">
                   <i class="fa fa-plus"></i> Tambah Alamat Baru</a>
               </div>
             </div>
@@ -41,9 +41,9 @@
                       </div>
                       <div class="col-lg-3">
                         <div class="d-flex align-items-center justify-content-center">
-                          <form method="POST" action="/user/account/address/delete/<%= address.id %>?_method=DELETE">
+                          <form method="POST" action="/user/account/addresses/<%= address.id %>?_method=DELETE">
                             <div class="container pb-2 pt-3">
-                              <a class="btn btn-warning mb-2" href="/user/account/address/update/<%= address.id %>">
+                              <a class="btn btn-warning mb-2" href="/user/account/addresses/<%= address.id %>">
                                 <i class="fa fa-pencil"></i> Ubah</a>
                               <button class="btn btn-danger mb-2" type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
                                 <i class="fa fa-trash-o"></i> Hapus</button>

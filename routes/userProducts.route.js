@@ -10,9 +10,9 @@ userProductsRouter.get('/userProducts', productController.getUserProducts)
 userProductsRouter.get('/userProducts/add', productController.addUserProduct)
 userProductsRouter.post('/userProducts', productController.uploadMiddleware, productController.postAddUserProduct)
 userProductsRouter.get('/userProducts/update/:id', productController.updateUserProduct)
-userProductsRouter.put('/userProducts/update', productController.uploadMiddleware, productController.postUpdateUserProduct)
-userProductsRouter.delete('/userProducts/delete/:id', productController.deleteUserProduct)
-userProductsRouter.get('/userProducts/detail/:id', productController.detailUserProduct)
+userProductsRouter.put('/userProducts', productController.uploadMiddleware, productController.postUpdateUserProduct)
+userProductsRouter.delete('/userProducts/:id', productController.deleteUserProduct)
+userProductsRouter.get('/userProducts/:id', productController.detailUserProduct)
 
 module.exports = {
   userProductsRouter

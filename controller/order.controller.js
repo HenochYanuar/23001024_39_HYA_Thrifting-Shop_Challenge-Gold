@@ -31,12 +31,12 @@ const checkout = async (req, res) => {
     const sellerAddress = await userAddressModel.getUserAddres(sellerBio.id)
 
     if (!product) {
-      res.status(400).redirect('/')
+      res.status(404).render('error/error', err404)
       return
     }
 
     if (product.userID === userID) {
-      res.status(200).redirect(`/user/account/userProducts/detail/${product.id}`)
+      res.status(200).redirect(`/user/account/userProducts/${product.id}`)
       return
     }
 

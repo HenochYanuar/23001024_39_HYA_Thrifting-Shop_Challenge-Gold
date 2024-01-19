@@ -9,8 +9,8 @@
           <img id="profilePhotoPreview" style="width: 60px; height: 60px; border-radius: 50%; border: solid 1px #f23567;" 
           src="/img/users/<%= context.userBio.foto %>" alt="Profile Photo">
         <% } %>
-        <div class="ml-3" style="color: #6a6a6a;">
-          <h5 style=" font-size: 18px;"><%= context.session.username %></h5>
+        <div class="ml-3">
+          <h5 style=" font-size: 18px;"><a style="color: #6a6a6a;" href="/user/account/profile"><%= context.session.username %></a></h5>
           <a href="/user/login/logout" style="color: #f23567;"><i class="fa fa-sign-out"></i> Logout</a>
         </div>
       </div>
@@ -28,7 +28,7 @@
             <a class="sub-menu" href="/user/account/profile">Profil</a>
           </li>
           <li class="list-group-item menu-group">
-            <a class="sub-menu" href="/user/account/address">Alamat</a>
+            <a class="sub-menu" href="/user/account/addresses">Alamat</a>
           </li>
         </ul>
       </li>

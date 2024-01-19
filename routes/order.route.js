@@ -6,8 +6,8 @@ const orderRouter = express.Router()
 
 orderRouter.use(authMiddleware)
 
-orderRouter.get('/buyProduct/:id', orderController.checkout)
-orderRouter.post('/buyProduct/:id', orderController.buyProduct)
+orderRouter.get('/:id', orderController.checkout)
+orderRouter.post('/:id', orderController.buyProduct)
 
 module.exports = {
   orderRouter

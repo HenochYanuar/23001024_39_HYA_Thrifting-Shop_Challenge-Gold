@@ -65,7 +65,7 @@ const postAddUserAddress = async (req, res) => {
       userID: user.id
     })
 
-    return res.status(201).redirect('/user/account/address')
+    return res.status(201).redirect('/user/account/addresses')
 
   } catch (error) {
     console.error('Error in postAddUserAddress:', error)
@@ -112,7 +112,7 @@ const postUpdateUserAddress = async (req, res) => {
 
     await userAddressModel.update(id, province, regency, subdistrict, postalCode, addressDetail, userID)
 
-    return res.status(201).redirect('/user/account/address')
+    return res.status(201).redirect('/user/account/addresses')
 
   } catch (error) {
     console.error('Error in postUpdateUserAddress:', error)
@@ -133,7 +133,7 @@ const deleteUserAddress = async (req, res) => {
 
     await userAddressModel.deleteUserAddress(id)
 
-    return res.status(201).redirect('/user/account/address')
+    return res.status(201).redirect('/user/account/addresses')
 
   } catch (error) {
     console.error('Error in deleteUserAddress:', error)

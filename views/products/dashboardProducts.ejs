@@ -5,7 +5,7 @@
         <% if (context.products && context.products.length > 0) { %>
         <% context.products.forEach((product) => { %>
         <div class="col-lg-2 mb-4">
-          <a href="/buyProduct/<%= product.id %>">
+          <a href="/checkout/<%= product.id %>">
             <div class="card h-100"
               onMouseOver="this.style.outline='solid 1px #f23567'; this.style.transform= 'scale(1.1)'; this.style.transition='transform 0.3s ease'"
               onMouseOut="this.style.outline='none'; this.style.transform= 'none';">
